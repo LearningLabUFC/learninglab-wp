@@ -182,21 +182,21 @@ body .cabecalho {
     padding: 10px 15px;
     border: 1px solid var(--ll-accent);
     border-radius: 5px;
-    color: var(--ll-accent);
+    color: (--ll-accent)a9a;
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-links .current {
     background-color: var(--ll-accent);
-    color: var(--ll-on-accent);
+    color: #fff;
     border-color: var(--ll-accent);
     font-weight: bold;
 }
 
 .nav-links .page-numbers:hover {
     background-color: var(--ll-accent);
-    color: var(--ll-on-accent);
+    color: #fff;
 }
 
 .nav-links .prev,

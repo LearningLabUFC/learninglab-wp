@@ -38,16 +38,16 @@ footer {
 }
 
 .conteiner-footer a {
-    color: gray;
+    color: var(--ll-text-subtle);
 }
 
 .conteiner-footer h4 {
-    color: var(--ll-accent);
+    color: #f2637e;
     margin-bottom: 1rem;
 }
 
 footer p {
-    color: grey;
+    color: var(--ll-text-subtle);
 }
 
 .footer-widget {
@@ -75,14 +75,14 @@ footer p {
 
 .social-media a {
     margin-right: 0.8rem;
-    color: grey;
+    color: var(--ll-text-subtle);
     text-decoration: none;
     font-size: 24px;
     transition: color 0.3s ease;
 }
 
 .social-media a:hover {
-    color: var(--ll-accent);
+    color: #f2637e;
 }
 
 @media (max-width: 768px) {

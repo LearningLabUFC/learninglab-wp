@@ -46,4 +46,4 @@ themes/*
 
 # Working code
 !plugins/learninglab-core/
-!themes/learninglab/
+!themes/learninglab-site/

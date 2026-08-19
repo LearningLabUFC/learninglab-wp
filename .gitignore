@@ -32,3 +32,18 @@ build/
 
 # OS / misc
 Thumbs.db
+
+# Sensible folders
+uploads/
+upgrade/
+cache/
+mu-plugins/
+languages/
+
+# Other plugins/themes
+plugins/*
+themes/*
+
+# Working code
+!plugins/learninglab-core/
+!themes/learninglab/

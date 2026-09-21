@@ -2,5 +2,19 @@
   "intelephense.environment.includePaths": [
     "./vendor/php-stubs/wordpress-stubs"
   ],
-  "intelephense.files.maxSize": 15000000
+  "intelephense.files.maxSize": 15000000,
+
+  "files.exclude": {
+    "**/languages": true,
+    "**/upgrade": true,
+    "**/uploads": true,
+    "**/mu-plugins": true,
+    "plugins/index.php": true,
+    "themes/index.php": true
+  },
+
+  "search.exclude": {
+    "**/uploads": true,
+    "**/vendor": true
+  }
 }

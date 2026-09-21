@@ -1,19 +1,19 @@
-name: Deploy do Tema WordPress via FTP
+name: Deploy WordPress — Tema e Plugin via FTP
 
 on:
   push:
     branches: [main]
 
 jobs:
-  deploy:
-    name: Deploy
+  deploy-tema:
+    name: Deploy — Tema (learninglab-site)
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Sincronizar arquivos via FTP
+      - name: Sincronizar tema via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -21,9 +21,35 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: 21
-          local-dir: ./
-          server-dir: ./learninglab.com.br/wp-content/themes/site-learninglab/
+          local-dir: ./themes/learninglab-site/
+          server-dir: ./learninglab.com.br/wp-content/themes/learninglab-site/
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/**
+            **/.DS_Store
+
+  deploy-plugin:
+    name: Deploy — Plugin (learninglab-core)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sincronizar plugin via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./plugins/learninglab-core/
+          server-dir: ./learninglab.com.br/wp-content/plugins/learninglab-core/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.DS_Store
+            **/.gitkeep

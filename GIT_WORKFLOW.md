@@ -1,394 +1,286 @@
-# Guia Completo de Git/GitHub para o Projeto LearningLab
+# Guia de Git/GitHub — LearningLab
 
-Este guia foi elaborado para auxiliar a equipe do projeto LearningLab (site WordPress) a utilizar o Git/GitHub de forma eficiente e padronizada. Aqui você encontrará instruções detalhadas sobre o fluxo de trabalho, manipulação de branches, convenções de nomenclatura e configuração inicial.
+Guia de fluxo de trabalho Git para a equipe de desenvolvimento do site LearningLab. O repositório é um **monorepo** que contém o tema WordPress e o plugin principal.
 
 ## Sumário
 
-1. [Configuração Inicial](#configuração-inicial)
-2. [Estrutura de Branches](#estrutura-de-branches)
-3. [Fluxo de Trabalho](#fluxo-de-trabalho)
-4. [Convenções de Nomenclatura](#convenções-de-nomenclatura)
-5. [Comandos Úteis](#comandos-úteis)
-6. [Pull Requests](#pull-requests)
-7. [Referência Rápida](#referência-rápida)
+1. [Estrutura do Repositório](#estrutura-do-repositório)
+2. [Configuração Inicial](#configuração-inicial)
+3. [Estrutura de Branches](#estrutura-de-branches)
+4. [Fluxo de Trabalho](#fluxo-de-trabalho)
+5. [Convenções de Nomenclatura](#convenções-de-nomenclatura)
+6. [Comandos Úteis](#comandos-úteis)
+7. [Pull Requests](#pull-requests)
+8. [Deploy (CI/CD)](#deploy-cicd)
+9. [Referência Rápida](#referência-rápida)
+
+---
+
+## Estrutura do Repositório
+
+Este repositório é um **monorepo** hospedado em `wp-content/`. Ele contém dois subprojetos rastreados pelo Git:
+
+```
+wp-content/
+├── themes/
+│   └── learninglab-site/      ← Tema WordPress
+└── plugins/
+    └── learninglab-core/      ← Plugin principal (CPTs, taxonomias, meta boxes)
+```
+
+> Apenas `themes/learninglab-site/` e `plugins/learninglab-core/` são rastreados pelo Git.
+> Outros plugins, temas e uploads são ignorados via `.gitignore`.
+
+---
 
 ## Configuração Inicial
 
-### 1. Instalando o Git
-
-#### Instalação do Git
-
-**Windows:**
-
-- Acesse https://git-scm.com/download/win e baixe o instalador
-- Execute o instalador com as opções padrão
+### 1. Instalar o Git
 
 **Mac:**
+```bash
+brew install git
+```
 
-- Via Homebrew: `brew install git`
-- Ou baixe o instalador em https://git-scm.com/download/mac
+**Windows:** Baixe em https://git-scm.com/download/win
 
-**Linux:**
+**Linux (Ubuntu/Debian):**
+```bash
+sudo apt-get install git
+```
 
-- Ubuntu/Debian: `sudo apt-get install git`
-- Fedora: `sudo dnf install git`
-
-### 2. Configurando sua identidade no Git
+### 2. Configurar sua identidade
 
 ```bash
-# Via linha de comando
 git config --global user.name "Seu Nome"
 git config --global user.email "seuemail@exemplo.com"
 ```
 
-**No VS Code:**
+### 3. Clonar o repositório
 
-- Acesse as configurações (Ctrl+, ou Cmd+,)
-- Pesquise por "git user" e preencha os campos
-
-### 3. Clonando o Repositório do LearningLab
-
-**Via linha de comando:**
+> ⚠️ O repositório deve ser clonado **dentro** da pasta `wp-content` de uma instalação WordPress.
+> Recomendamos usar o **LocalWP** para desenvolvimento local. Veja o [README.md](./README.md) para instruções completas.
 
 ```bash
-git clone https://github.com/caminho-do-repositorio/LearningLab.git
-cd LearningLab
+# Navegue até wp-content da sua instalação local
+cd /caminho/para/wordpress/wp-content
+
+# Clone o repositório (isso vai preencher themes/ e plugins/)
+git clone https://github.com/LearningLabUFC/learninglab-wp.git .
 ```
 
-**No VS Code:**
-
-1. Pressione Ctrl+Shift+P (ou Cmd+Shift+P no Mac)
-2. Digite "Git: Clone"
-3. Cole a URL do repositório
-4. Selecione onde salvar o projeto
+---
 
 ## Estrutura de Branches
 
-O projeto LearningLab possui duas branches principais:
+| Branch | Propósito |
+|--------|-----------|
+| `main` | Produção — código estável, deploy automático via GitHub Actions |
+| `develop` | Integração — recebe features prontas antes de ir para main |
+| `feature/*` | Novas funcionalidades no **tema** |
+| `plugin/*` | Novas funcionalidades no **plugin** |
+| `fix/*` | Correções de bugs |
+| `hotfix/*` | Correções urgentes diretamente de `main` |
+| `refactor/*` | Refatorações sem mudança de comportamento |
+| `docs/*` | Apenas documentação |
 
-1. **main** - Branch de produção, contém o código estável
-2. **develop** - Branch de desenvolvimento, recebe novas funcionalidades antes da produção
-
-### Visualizando branches
-
-**Via linha de comando:**
+### Visualizar branches
 
 ```bash
-# Listar branches disponíveis localmente
+# Branches locais
 git branch
 
-# Listar todas as branches (locais e remotas)
+# Todas (locais + remotas)
 git branch -a
 ```
 
-**No VS Code:**
-
-1. Clique no nome da branch atual na barra de status (canto inferior esquerdo)
-2. Um menu aparecerá mostrando todas as branches disponíveis
+---
 
 ## Fluxo de Trabalho
 
-O fluxo de trabalho recomendado segue estas etapas:
-
-### 1. Sempre comece a partir da branch develop atualizada
-
-**Via linha de comando:**
+### 1. Sempre parta da `develop` atualizada
 
 ```bash
-# Mudar para a branch develop
 git checkout develop
-
-# Atualizar a branch com as últimas alterações do repositório remoto
 git pull origin develop
 ```
 
-**No VS Code:**
-
-1. Clique no nome da branch na barra de status
-2. Selecione "develop" da lista
-3. Clique no ícone de sincronização na barra de status ou use Ctrl+Shift+G e clique em "Pull"
-
-### 2. Crie uma nova branch para sua funcionalidade/correção
-
-**Via linha de comando:**
+### 2. Crie sua branch de trabalho
 
 ```bash
-# Crie uma nova branch a partir da develop e mude para ela
+# Para mudanças no tema
 git checkout -b feature/nome-da-funcionalidade
+
+# Para mudanças no plugin
+git checkout -b plugin/nome-da-funcionalidade
 ```
 
-**No VS Code:**
-
-1. Clique no nome da branch na barra de status
-2. Clique em "+ Create new branch"
-3. Digite o nome seguindo a convenção (ex: feature/nome-da-funcionalidade)
-
-### 3. Desenvolva sua funcionalidade e faça commits frequentes
-
-**Via linha de comando:**
+### 3. Desenvolva e faça commits frequentes
 
 ```bash
-# Adicione os arquivos modificados
+# Adicione arquivos modificados
 git add .
 
-# Ou adicione arquivos específicos
-git add caminho/do/arquivo
-
-# Faça o commit com uma mensagem descritiva
-git commit -m "feat: adiciona formulário de contato"
+# Faça commit com mensagem descritiva (veja convenções abaixo)
+git commit -m "feat: adiciona grid de subprojetos na página inicial"
 ```
 
-**No VS Code:**
-
-1. Na aba Source Control (Ctrl+Shift+G)
-2. Veja as alterações e clique no "+" ao lado do arquivo para staged
-3. Digite uma mensagem de commit na caixa de texto
-4. Clique em "✓" (Commit)
-
-### 4. Envie sua branch para o repositório remoto
-
-**Via linha de comando:**
+### 4. Envie sua branch para o remoto
 
 ```bash
 git push origin feature/nome-da-funcionalidade
 ```
 
-**No VS Code:**
+### 5. Abra um Pull Request
 
-1. Na aba Source Control
-2. Clique em "..." e selecione "Push"
-3. Na primeira vez, selecione "Publish Branch"
+- Base: `develop`
+- Compare: sua branch
+- Preencha título, descrição e adicione reviewers
 
-### 5. Crie um Pull Request
-
-Quando sua funcionalidade estiver pronta, crie um Pull Request da sua branch para a branch develop.
+---
 
 ## Convenções de Nomenclatura
 
 ### Branches
 
-Siga este formato para nomes de branches:
-
-1. **feature/nome-da-funcionalidade** - Para novas funcionalidades
-
-   - Exemplo: `feature/formulario-contato`
-
-2. **fix/nome-do-problema** - Para correções de bugs
-
-   - Exemplo: `fix/menu-responsivo`
-
-3. **hotfix/nome-do-problema** - Para correções urgentes em produção
-
-   - Exemplo: `hotfix/erro-login`
-
-4. **refactor/nome-componente** - Para refatoração de código
-
-   - Exemplo: `refactor/estrutura-css`
-
-5. **docs/nome-documento** - Para atualização de documentação
-   - Exemplo: `docs/readme-update`
-
-### Commits
-
-Use prefixos nas mensagens de commit para indicar o tipo de alteração:
-
-1. **feat:** - Nova funcionalidade
-
-   - Exemplo: `feat: adiciona página de blog`
-
-2. **fix:** - Correção de bug
-
-   - Exemplo: `fix: corrige responsividade no menu mobile`
-
-3. **docs:** - Atualização de documentação
-
-   - Exemplo: `docs: atualiza README com instruções de instalação`
-
-4. **style:** - Mudanças que não afetam o significado do código (espaçamento, formatação, etc.)
-
-   - Exemplo: `style: formata código CSS seguindo padrões`
-
-5. **refactor:** - Refatoração de código
-
-   - Exemplo: `refactor: simplifica lógica de validação do formulário`
-
-6. **chore:** - Atualizações de tarefas de build, configurações, etc.
-   - Exemplo: `chore: atualiza dependências do WordPress`
-
-**Regras para mensagens de commit:**
-
-- Use o tempo presente ("adiciona" em vez de "adicionado")
-- Não use ponto final no título do commit
-- Seja conciso mas descritivo
-- Use no máximo 50 caracteres para o título
-
-## Comandos Úteis
-
-### Verificar Status
-
-**Via linha de comando:**
-
-```bash
-# Ver arquivos modificados, staged e não staged
-git status
+```
+feature/nome-da-funcionalidade     → nova feature no tema
+plugin/nome-da-funcionalidade      → nova feature no plugin
+fix/descricao-do-bug               → correção de bug
+hotfix/descricao-urgente           → correção urgente em produção
+refactor/componente-refatorado     → refatoração
+docs/nome-do-documento             → documentação
 ```
 
-**No VS Code:**
+### Commits (Conventional Commits)
 
-- A aba Source Control (Ctrl+Shift+G) mostra automaticamente o status
+| Prefixo | Quando usar | Exemplo |
+|---------|-------------|---------|
+| `feat:` | Nova funcionalidade | `feat: adiciona filtro de artigos por ano` |
+| `fix:` | Correção de bug | `fix: corrige layout da grid de membros no mobile` |
+| `refactor:` | Refatoração | `refactor: divide meta-boxes em arquivos separados` |
+| `style:` | Formatação, CSS (sem lógica) | `style: ajusta espaçamento da seção hero` |
+| `docs:` | Documentação | `docs: atualiza README com passos de instalação` |
+| `chore:` | Tarefas de config/build | `chore: atualiza dependências do Composer` |
+| `ci:` | Pipeline CI/CD | `ci: adiciona job de deploy do plugin` |
 
-### Visualizar Histórico
-
-**Via linha de comando:**
-
-```bash
-# Ver histórico de commits
-git log
-
-# Ver histórico simplificado em uma linha
-git log --oneline
-
-# Ver histórico com gráfico
-git log --graph --oneline --all
-```
-
-**No VS Code:**
-
-1. Na aba Source Control, clique em "..."
-2. Selecione "View History"
-
-### Desfazer Alterações
-
-**Via linha de comando:**
-
-```bash
-# Desfazer alterações não commitadas em um arquivo
-git checkout -- nome-do-arquivo
-
-# Desfazer alterações staged (após git add)
-git reset HEAD nome-do-arquivo
-
-# Desfazer o último commit mantendo as alterações
-git reset --soft HEAD~1
-
-# Desfazer o último commit descartando as alterações (cuidado!)
-git reset --hard HEAD~1
-```
-
-**No VS Code:**
-
-1. Na aba Source Control, clique com o botão direito no arquivo
-2. Selecione "Discard Changes" para desfazer alterações não commitadas
-
-### Mudando entre Branches
-
-**Via linha de comando:**
-
-```bash
-# Mudar para outra branch
-git checkout nome-da-branch
-
-# Criar e mudar para nova branch
-git checkout -b nome-da-nova-branch
-```
-
-**No VS Code:**
-
-1. Clique no nome da branch na barra de status
-2. Selecione a branch desejada da lista
-
-### Atualizar seu Repositório Local
-
-**Via linha de comando:**
-
-```bash
-# Atualizar branch atual
-git pull
-
-# Buscar todas as atualizações sem aplicá-las
-git fetch --all
-```
-
-**No VS Code:**
-
-- Clique no ícone de sincronização na barra de status
-
-### Resolver Conflitos
-
-**Via linha de comando:**
-
-```bash
-# Após um conflito durante merge ou pull
-git status  # para ver arquivos com conflito
-# Edite os arquivos para resolver os conflitos
-git add .   # Marque os conflitos como resolvidos
-git commit  # Finalize o merge
-```
-
-**No VS Code:**
-
-1. Os arquivos com conflito serão destacados
-2. Clique em "Resolve in Editor"
-3. Escolha "Accept Current Change", "Accept Incoming Change", "Accept Both Changes" ou edite manualmente
-4. Adicione os arquivos resolvidos e faça commit
-
-## Pull Requests
-
-### Criando um Pull Request
-
-1. Acesse o repositório no GitHub
-2. Clique em "Pull Requests" e depois em "New Pull Request"
-3. Escolha sua branch como "compare" e "develop" como "base"
-4. Clique em "Create Pull Request"
-5. Preencha:
-   - **Título**: Breve descrição da funcionalidade
-   - **Descrição**: Detalhes sobre o que foi implementado, como testar, screenshots se aplicável
-6. Adicione reviewers (colegas de equipe para revisar seu código)
-7. Clique em "Create Pull Request"
-
-### Revisando um Pull Request
-
-1. Acesse o Pull Request no GitHub
-2. Verifique as alterações na aba "Files changed"
-3. Deixe comentários em linhas específicas clicando no "+" que aparece ao passar o mouse
-4. Aprove ou solicite mudanças no menu "Review changes"
-
-## Referência Rápida
-
-### Ciclo de Trabalho Diário
-
-1. Atualize a branch develop: `git checkout develop && git pull`
-2. Crie sua branch de trabalho: `git checkout -b feature/sua-funcionalidade`
-3. Faça alterações e commits frequentes
-4. Envie sua branch para o repositório: `git push origin feature/sua-funcionalidade`
-5. Crie um Pull Request para a branch develop quando finalizar
-
-### Convenções Importantes
-
-| Tipo de Branch | Formato                     | Exemplo                |
-| -------------- | --------------------------- | ---------------------- |
-| Feature        | feature/nome-funcionalidade | feature/pagina-contato |
-| Correção       | fix/nome-problema           | fix/erro-formulario    |
-| Urgente        | hotfix/nome-problema        | hotfix/falha-seguranca |
-
-| Tipo de Commit      | Formato             | Exemplo                                 |
-| ------------------- | ------------------- | --------------------------------------- |
-| Nova funcionalidade | feat: descrição     | feat: adiciona sistema de login         |
-| Correção            | fix: descrição      | fix: corrige erro na validação de email |
-| Documentação        | docs: descrição     | docs: atualiza instruções de instalação |
-| Refatoração         | refactor: descrição | refactor: otimiza queries do banco      |
+**Regras:**
+- Use o **imperativo presente**: "adiciona", não "adicionado"
+- Sem ponto final no título
+- Máximo 72 caracteres no título
+- Use o corpo do commit para explicar o *porquê*, não o *o quê*
 
 ---
 
-## Considerações Finais
+## Comandos Úteis
 
-Este guia foi desenvolvido para padronizar e facilitar o trabalho da equipe no projeto LearningLab. Lembre-se:
+```bash
+# Ver status dos arquivos
+git status
 
-- **Sempre** trabalhe em uma branch separada, nunca diretamente na main ou develop
-- **Faça commits frequentes** com mensagens claras e descritivas
-- **Mantenha suas branches atualizadas** antes de começar a trabalhar
-- **Comunique-se com a equipe** sobre o que está desenvolvendo
+# Ver histórico resumido
+git log --oneline
 
-Se tiver dúvidas ou sugestões para melhorar este guia, fale com o coordenador do projeto.
+# Ver histórico com gráfico de branches
+git log --graph --oneline --all
 
-Bom trabalho!
+# Desfazer alterações não commitadas em um arquivo
+git restore nome-do-arquivo
+
+# Desfazer git add (tirar do stage)
+git restore --staged nome-do-arquivo
+
+# Desfazer último commit (mantendo as alterações)
+git reset --soft HEAD~1
+
+# Atualizar branch com develop (sem merge commit)
+git rebase develop
+
+# Buscar atualizações remotas sem aplicar
+git fetch --all
+```
+
+### Resolver conflitos
+
+```bash
+git status          # identifica arquivos com conflito
+# Edite os arquivos conflitantes
+git add .           # marca como resolvidos
+git commit          # finaliza o merge/rebase
+```
+
+---
+
+## Pull Requests
+
+### Criando um PR
+
+1. Acesse o repositório em https://github.com/LearningLabUFC/learninglab-wp
+2. Clique em **Pull Requests → New Pull Request**
+3. Configure:
+   - **base:** `develop`
+   - **compare:** sua branch
+4. Preencha:
+   - **Título:** mensagem clara e curta
+   - **Descrição:** o que foi feito, como testar, screenshots se aplicável
+5. Adicione **reviewers** (colegas da equipe)
+6. Clique em **Create Pull Request**
+
+### Revisando um PR
+
+1. Acesse o PR no GitHub
+2. Vá em **Files changed** para ver as alterações
+3. Clique no `+` ao lado de uma linha para comentar
+4. Em **Review changes**, escolha: Approve, Comment ou Request changes
+
+---
+
+## Deploy (CI/CD)
+
+O deploy é feito automaticamente via **GitHub Actions** ao fazer push na branch `main`.
+
+O pipeline `.github/workflows/deploy.yml` possui dois jobs independentes:
+
+| Job | O que faz |
+|-----|-----------|
+| `deploy-tema` | Envia `themes/learninglab-site/` para o servidor via FTPS |
+| `deploy-plugin` | Envia `plugins/learninglab-core/` para o servidor via FTPS |
+
+### Secrets necessários no repositório GitHub
+
+| Secret | Descrição |
+|--------|-----------|
+| `FTP_SERVER` | Endereço do servidor FTP de produção |
+| `FTP_USERNAME` | Usuário FTP |
+| `FTP_PASSWORD` | Senha FTP |
+
+> ⚠️ **Nunca** faça push direto em `main`. Sempre passe por `develop` e abra um PR.
+
+---
+
+## Referência Rápida
+
+### Ciclo de trabalho diário
+
+```bash
+git checkout develop && git pull          # 1. Atualiza develop
+git checkout -b feature/minha-feature     # 2. Cria branch
+# ... desenvolve ...
+git add . && git commit -m "feat: ..."    # 3. Commita
+git push origin feature/minha-feature    # 4. Envia para o remoto
+# 5. Abre Pull Request no GitHub para develop
+```
+
+### Tabela de branches
+
+| Tipo | Formato | Exemplo |
+|------|---------|---------|
+| Feature (tema) | `feature/nome` | `feature/pagina-contato` |
+| Feature (plugin) | `plugin/nome` | `plugin/cpt-eventos` |
+| Correção | `fix/nome` | `fix/menu-mobile` |
+| Urgente | `hotfix/nome` | `hotfix/falha-login` |
+| Refatoração | `refactor/nome` | `refactor/css-variaveis` |
+
+---
+
+> **Dúvidas?** Fale com o coordenador do projeto ou abra uma [issue](https://github.com/LearningLabUFC/learninglab-wp/issues).

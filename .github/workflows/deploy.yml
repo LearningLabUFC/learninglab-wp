@@ -20,6 +20,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
+          security: loose
           port: 21
           local-dir: ./themes/learninglab-site/
           server-dir: ./learninglab.com.br/wp-content/themes/learninglab-site/
@@ -44,6 +45,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
+          security: loose
           port: 21
           local-dir: ./plugins/learninglab-core/
           server-dir: ./learninglab.com.br/wp-content/plugins/learninglab-core/

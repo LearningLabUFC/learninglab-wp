@@ -56,10 +56,13 @@ body.editor-styles-wrapper,
 	font-weight: 600 !important;
 }
 
-/* ─── Forçar Largura de 1100px no Gutenberg ──────────────────────────────── */
-/* 1. Container raiz do editor */
+/* ─── Forçar Largura de 1100px e Alinhamento Perfeito no Gutenberg ────── */
+/* 1. Container raiz do editor e wrappers principais de título */
 .editor-styles-wrapper .is-root-container,
-.is-root-container.block-editor-block-list__layout {
+.is-root-container.block-editor-block-list__layout,
+.edit-post-visual-editor__post-title-wrapper,
+.editor-post-title__block,
+.wp-block-post-title {
 	max-width: 1100px !important;
 	width: 100% !important;
 	margin-left: auto !important;
@@ -69,7 +72,7 @@ body.editor-styles-wrapper,
 	box-sizing: border-box !important;
 }
 
-/* 2. Todos os blocos filhos e títulos no editor */
+/* 2. Todos os blocos filhos e entradas de título no editor */
 .editor-styles-wrapper .is-root-container > .wp-block:not([data-align="full"]):not([data-align="wide"]),
 .editor-styles-wrapper .is-root-container > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
 .editor-styles-wrapper .wp-block:not([data-align="full"]):not([data-align="wide"]),
@@ -77,12 +80,8 @@ body.editor-styles-wrapper,
 .is-root-container > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
 .block-editor-block-list__layout.is-root-container > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
 .wp-block:not([data-align="full"]):not([data-align="wide"]),
-.wp-block[data-align="none"],
-.editor-post-title__block,
-.editor-post-title__input,
-.wp-block-post-title,
-.edit-post-visual-editor__post-title-wrapper {
-	max-width: 1100px !important;
+.wp-block[data-align="none"] {
+	max-width: 100% !important;
 	width: 100% !important;
 	box-sizing: border-box !important;
 	margin-left: auto !important;
@@ -102,7 +101,7 @@ body.editor-styles-wrapper,
 	max-width: 100% !important;
 }
 
-/* Título principal do Post */
+/* Título principal do Post - Alinhamento idêntico aos parágrafos */
 .editor-post-title__input,
 .wp-block-post-title,
 .editor-styles-wrapper .editor-post-title__input,
@@ -115,6 +114,10 @@ body.editor-styles-wrapper,
 	color: #1e1e1e !important;
 	line-height: 1.25 !important;
 	margin-bottom: 2rem !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
 }
 
 /* Cabeçalhos no Editor (Gestalt: mais próximo do texto abaixo) */

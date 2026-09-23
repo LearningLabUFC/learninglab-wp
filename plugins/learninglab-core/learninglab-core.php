@@ -28,3 +28,9 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/taxonomies/tax-ano-artigo.p
 // Meta Boxes
 require_once plugin_dir_path( __FILE__ ) . 'includes/meta-boxes/mb-membro.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/meta-boxes/mb-artigo.php';
+
+// Blocos Gutenberg
+function learninglab_register_blocks() {
+    register_block_type( plugin_dir_path( __FILE__ ) . 'includes/blocks/slider-gallery' );
+}
+add_action( 'init', 'learninglab_register_blocks' );

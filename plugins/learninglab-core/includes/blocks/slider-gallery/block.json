@@ -34,8 +34,8 @@
     "autoplayDelay":  { "type": "number",  "default": 4000 },
     "align":          { "type": "string",  "default": "" }
   },
-  "editorScript": "file:../../build/index.js",
-  "editorStyle":  "file:../../build/index.css",
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle":  "file:../../../build/index.css",
   "render":       "file:render.php",
   "textdomain":   "learninglab-core"
 }

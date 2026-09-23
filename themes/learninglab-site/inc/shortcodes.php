@@ -1,5 +1,46 @@
 <?php
 
+function learninglab_render_membros_grid($membros)
+{
+    if (!is_admin()) {
+        wp_enqueue_style('learninglab_membro_style');
+    }
+
+    $membros_count = count($membros);
+    $classe_limite = '';
+
+    if ($membros_count >= 2 && $membros_count <= 5) {
+        $classe_limite = ' limite-' . $membros_count;
+    } elseif ($membros_count > 5) {
+        $classe_limite = ' limite-mais-de-5';
+    }
+
+    $output = '<div class="membros-grid' . $classe_limite . '">';
+
+    foreach ($membros as $membro) {
+        $nome_completo = get_the_title($membro->ID);
+        $partes = explode(' ', trim($nome_completo));
+        if (count($partes) <= 1) {
+            $nome_html = '<span class="membro-primeiro-nome">' . esc_html($nome_completo) . '</span><span class="membro-sobrenome">&nbsp;</span>';
+        } else {
+            $sobrenome = array_pop($partes);
+            $primeiro_nomes = implode(' ', $partes);
+            $nome_html = '<span class="membro-primeiro-nome">' . esc_html($primeiro_nomes) . '</span><span class="membro-sobrenome">' . esc_html($sobrenome) . '</span>';
+        }
+
+        $imagem = get_the_post_thumbnail($membro->ID, 'thumbnail', array('class' => 'attachment-thumbnail size-thumbnail wp-post-image'));
+
+        $output .= '<div class="membro-item">';
+        if ($imagem) {
+            $output .= '<div class="membro-avatar">' . $imagem . '</div>';
+        }
+        $output .= '<h4 class="membro-nome">' . $nome_html . '</h4>';
+        $output .= '</div>';
+    }
+
+    return $output . '</div>';
+}
+
 function membros_shortcode($atts)
 {
     $atts = shortcode_atts(
@@ -16,12 +57,7 @@ function membros_shortcode($atts)
         return '';
     }
 
-    if (!is_admin()) {
-        wp_enqueue_style('learninglab_membro_style');
-    }
-
-    $output = '<div class="membros-grid">';
-    $membros_count = 0;
+    $membros = array();
 
     foreach ($slugs as $slug) {
         if (empty($slug)) continue;
@@ -32,51 +68,70 @@ function membros_shortcode($atts)
             'post_status' => 'publish',
             'numberposts' => 1,
         );
-        $membros = get_posts($args);
+        $resultado = get_posts($args);
 
-        if ($membros) {
-            $post_obj = $membros[0];
-            $post_id  = $post_obj->ID;
-
-            $nome_completo = get_the_title($post_id);
-            $partes = explode(' ', trim($nome_completo));
-            if (count($partes) <= 1) {
-                $nome_html = '<span class="membro-primeiro-nome">' . esc_html($nome_completo) . '</span><span class="membro-sobrenome">&nbsp;</span>';
-            } else {
-                $sobrenome = array_pop($partes);
-                $primeiro_nomes = implode(' ', $partes);
-                $nome_html = '<span class="membro-primeiro-nome">' . esc_html($primeiro_nomes) . '</span><span class="membro-sobrenome">' . esc_html($sobrenome) . '</span>';
-            }
-
-            $imagem = get_the_post_thumbnail($post_id, 'thumbnail', array('class' => 'attachment-thumbnail size-thumbnail wp-post-image'));
-
-            $output .= '<div class="membro-item">';
-            if ($imagem) {
-                $output .= '<div class="membro-avatar">' . $imagem . '</div>';
-            }
-            $output .= '<h4 class="membro-nome">' . $nome_html . '</h4>';
-            $output .= '</div>';
-
-            $membros_count++;
+        if ($resultado) {
+            $membros[] = $resultado[0];
         }
     }
-    if ($membros_count === 2) {
-        $output = str_replace('<div class="membros-grid">', '<div class="membros-grid limite-2">', $output);
-    } elseif ($membros_count === 3) {
-        $output = str_replace('<div class="membros-grid">', '<div class="membros-grid limite-3">', $output);
-    } elseif ($membros_count === 4) {
-        $output = str_replace('<div class="membros-grid">', '<div class="membros-grid limite-4">', $output);
-    } elseif ($membros_count === 5) {
-        $output = str_replace('<div class="membros-grid">', '<div class="membros-grid limite-5">', $output);
-    } elseif ($membros_count > 5) {
-        $output = str_replace('<div class="membros-grid">', '<div class="membros-grid limite-mais-de-5">', $output);
-    }
 
-    $output .= '</div>';
-
-    return $output;
+    return learninglab_render_membros_grid($membros);
 }
 add_shortcode('membros', 'membros_shortcode');
+
+function membros_categoria_shortcode($atts)
+{
+    $atts = shortcode_atts(
+        array(
+            'categoria' => '',
+            'tipo' => 'atuais',
+        ),
+        $atts,
+        'membros_categoria'
+    );
+
+    $categoria = sanitize_title($atts['categoria']);
+    $tipos = array(
+        'atuais' => 'membro-atual',
+        'egressos' => 'egresso',
+        'lideres' => 'lider',
+    );
+
+    if ($categoria === '' || ($atts['tipo'] !== 'todos' && !isset($tipos[$atts['tipo']]))) {
+        return '';
+    }
+
+    $tax_query = array(
+        array(
+            'taxonomy' => 'tipo_de_membro',
+            'field' => 'slug',
+            'terms' => $categoria,
+            'include_children' => true,
+        ),
+    );
+
+    if ($atts['tipo'] !== 'todos') {
+        $tax_query['relation'] = 'AND';
+        $tax_query[] = array(
+            'taxonomy' => 'tipo_de_membro',
+            'field' => 'slug',
+            'terms' => $tipos[$atts['tipo']],
+            'include_children' => $atts['tipo'] === 'lideres',
+        );
+    }
+
+    $membros = get_posts(array(
+        'post_type' => 'membro',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'orderby' => 'title',
+        'order' => 'ASC',
+        'tax_query' => $tax_query,
+    ));
+
+    return $membros ? learninglab_render_membros_grid($membros) : '';
+}
+add_shortcode('membros_categoria', 'membros_categoria_shortcode');
 
 
 

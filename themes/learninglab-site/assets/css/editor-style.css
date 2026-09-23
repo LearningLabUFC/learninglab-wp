@@ -110,10 +110,10 @@ body.editor-styles-wrapper,
 .edit-post-visual-editor__post-title-wrapper h1,
 .editor-post-title__block .editor-post-title__input {
 	font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-	font-size: 1.85rem !important;
+	font-size: 2.4rem !important;
 	font-weight: 700 !important;
 	color: #1e1e1e !important;
-	line-height: 1.3 !important;
+	line-height: 1.25 !important;
 	margin-bottom: 2rem !important;
 }
 

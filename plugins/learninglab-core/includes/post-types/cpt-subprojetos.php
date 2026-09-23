@@ -28,7 +28,7 @@ function registrar_cpt_subprojetos() {
         'hierarchical'      => false,
         'menu_position'     => 5,
         'menu_icon'         => 'dashicons-portfolio',
-        'supports'          => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+        'supports'          => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields' ),
         'show_in_rest'      => true,
     );
 

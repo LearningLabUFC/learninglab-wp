@@ -26,7 +26,7 @@ function registrar_cpt_membros() {
         'public'        => true,
         'has_archive'   => true,
         'show_in_rest'  => true,
-        'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+        'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields' ),
         'menu_position' => 20,
         'menu_icon'     => 'dashicons-groups',
     );

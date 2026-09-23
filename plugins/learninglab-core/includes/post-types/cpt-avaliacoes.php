@@ -27,7 +27,7 @@ function criar_cpt_avaliacoes() {
         'has_archive'  => false,
         'show_in_rest' => true,
         'menu_icon'    => 'dashicons-format-quote',
-        'supports'     => array( 'title', 'editor', 'thumbnail' ),
+        'supports'     => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields' ),
     );
 
     register_post_type( 'avaliacoes', $args );

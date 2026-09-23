@@ -129,87 +129,111 @@
 .paineis-de-cursos {
     display: flex;
     width: 100%;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
     margin-top: -560px;
-
+    gap: 1.5rem;
 }
 
 .painel-curso {
     width: 33%;
-    height: 500px;
-    border-radius: 10px;
+    min-height: 480px;
+    border-radius: 12px;
     background-color: white;
     text-align: left;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.painel-curso:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+
+.link-curso {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
 }
 
 .painel-curso img {
     width: 100%;
-    border-radius: 10px 10px 0px 0px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+    flex-shrink: 0;
 }
 
 .painel-descricao {
     display: flex;
     flex-direction: column;
-    width: 90%;
-    margin: auto;
+    flex-grow: 1;
+    width: 100%;
+    padding: 1.25rem 1.25rem 1.5rem 1.25rem;
+    box-sizing: border-box;
 }
 
 .painel-curso h3 {
-    margin-bottom: .5rem;
-    font-weight: bold;
-}
-
-.painel-curso p {
-    font-size: 1rem;
-    color: grey;
-    text-align: justify;
-    margin-bottom: 1rem;
-}
-
-.link-curso {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    
-}
-
-.painel-curso {
-    position: relative;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--ll-text, #1e1e1e);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-
-.painel-curso:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+.painel-curso p,
+.painel-texto,
+.painel-texto p {
+    font-size: 0.92rem;
+    color: var(--ll-text-subtle, #666);
+    line-height: 1.55;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .status {
-    position: absolute;
-    bottom: 2rem;
-    margin-bottom: 0;
+    position: static;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    display: flex;
+    align-items: center;
 }
 
 .status .inscricoes-abertas,
 .status .em-breve {
-    font-size: 0.9rem;
-    padding: 3px 7px;
-    color: var(--ll-on-accent);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    color: var(--ll-on-accent, #fff);
     border-radius: 20px;
+    letter-spacing: 0.02em;
+    display: inline-block;
 }
 
-
 .status .inscricoes-abertas {
-    background-color: var(--ll-accent);
+    background-color: var(--ll-accent, #8204EE);
 }
 
 .status .em-breve {
-	    background-color: var(--ll-gray-500);
+    background-color: var(--ll-gray-500, #777);
 }
 
 .mais-cursos {

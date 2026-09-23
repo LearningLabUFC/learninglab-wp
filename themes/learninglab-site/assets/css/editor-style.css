@@ -1,0 +1,68 @@
+/**
+ * Estilos do Editor Gutenberg — LearningLab
+ *
+ * Aplica a tipografia Montserrat (mesma do site) e padrão moderno ao editor.
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,700&display=swap");
+
+/* Tipografia global da área de edição */
+body,
+.editor-styles-wrapper,
+.wp-block-post-content,
+.edit-post-visual-editor,
+.block-editor-block-list__layout {
+	font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+	color: #2d2d2d;
+	line-height: 1.7;
+	font-size: 16px;
+}
+
+/* Título principal do Post */
+.editor-post-title__input,
+.wp-block-post-title,
+.editor-styles-wrapper .editor-post-title__input {
+	font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+	font-weight: 700 !important;
+	color: #1e1e1e !important;
+	line-height: 1.25 !important;
+}
+
+/* Títulos h1 a h6 */
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6,
+.wp-block-heading {
+	font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+	font-weight: 700;
+	color: #1e1e1e;
+	line-height: 1.3;
+	margin-top: 1.5em;
+	margin-bottom: 0.6em;
+}
+
+/* Parágrafos e blocos de texto */
+.editor-styles-wrapper p,
+.editor-styles-wrapper ul,
+.editor-styles-wrapper ol,
+.editor-styles-wrapper li,
+.wp-block-paragraph,
+p.block-editor-rich-text__editable {
+	font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+	font-size: 1.05rem;
+	line-height: 1.75;
+	color: #333;
+}
+
+/* Citações */
+.editor-styles-wrapper blockquote,
+.wp-block-quote {
+	font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+	font-style: italic;
+	border-left: 4px solid #8204EE;
+	padding-left: 1rem;
+	color: #555;
+}

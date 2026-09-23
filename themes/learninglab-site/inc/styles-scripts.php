@@ -86,3 +86,26 @@ function learninglab_register_scripts()
 }
 
 add_action('wp_enqueue_scripts', 'learninglab_register_scripts');
+
+/**
+ * Enfileira fontes e estilos para o editor de blocos (Gutenberg)
+ */
+function learninglab_block_editor_assets()
+{
+    $version = wp_get_theme()->get('Version');
+
+    wp_enqueue_style(
+        'learninglab-editor-google-fonts',
+        'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,700&display=swap',
+        array(),
+        null
+    );
+
+    wp_enqueue_style(
+        'learninglab-editor-custom-style',
+        get_template_directory_uri() . '/assets/css/editor-style.css',
+        array('learninglab-editor-google-fonts'),
+        $version
+    );
+}
+add_action('enqueue_block_editor_assets', 'learninglab_block_editor_assets');

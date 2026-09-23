@@ -25,7 +25,7 @@
     }
     ?>
 
-    <div class="content">
+    <div class="content entry-content">
         <?php the_content(); ?>
         
         <?php

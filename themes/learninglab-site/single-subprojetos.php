@@ -17,7 +17,7 @@
                 </div>
             </div>
 
-            <div class="container"><?php the_content(); ?></div>
+            <div class="content entry-content"><?php the_content(); ?></div>
 
         </article>
 

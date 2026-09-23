@@ -11,7 +11,8 @@ function learninglab_register_styles()
     
     wp_enqueue_style('learninglab_main_style', get_template_directory_uri() . "/assets/css/main.css", array(), $version, 'all');
 
-    
+    wp_enqueue_style('learninglab_content_typography', get_template_directory_uri() . "/assets/css/content-typography.css", array('learninglab_main_style'), $version, 'all');
+
     wp_enqueue_style('learninglab_header_style', get_template_directory_uri() . "/assets/css/header.css", array(), $version, 'all');
 
     wp_enqueue_style('learninglab_footer_style', get_template_directory_uri() . "/assets/css/footer.css", array(), $version, 'all');

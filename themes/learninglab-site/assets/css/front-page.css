@@ -114,24 +114,31 @@
 
 
 .container-cursos {
+    position: relative;
     width: 90%;
     max-width: 1100px;
-    margin: auto;
-    padding-bottom: 2rem;
+    margin: 4rem auto 0 auto;
 }
 
 .background-container-cursos {
-    background-color: var(--ll-accent);
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 85%;
-    height: 620px;
+    height: 100%;
+    background-color: var(--ll-accent);
+    border-radius: 16px;
+    z-index: 0;
 }
 
 .paineis-de-cursos {
+    position: relative;
+    z-index: 1;
     display: flex;
     width: 100%;
     align-items: stretch;
     justify-content: space-between;
-    margin-top: -560px;
+    margin-top: 0;
     gap: 1.5rem;
 }
 
@@ -246,42 +253,50 @@
     padding: 20px;
 }
 
-.mais-cursos button,
-.container-leitura button {
-	    background-color: var(--ll-surface);
-	    color: var(--ll-accent);
+.mais-cursos button {
+    background-color: var(--ll-surface);
+    color: var(--ll-accent);
 }
 
-.mais-cursos button:hover,
-.container-leitura button:hover {
-	    background-color: var(--ll-surface-subtle);
-	    color: var(--ll-accent);
-}
-
-
-.container-leitura button {
-    background-color: var(--ll-accent);
-    color: var(--ll-on-accent);
-}
-
-.container-leitura button:hover {
-    background-color: var(--ll-accent-hover);
-    color: var(--ll-on-accent);
-}
-
-.container-leitura button {
-    margin-bottom: 1.2rem;
+.mais-cursos button:hover {
+    background-color: var(--ll-surface-subtle);
+    color: var(--ll-accent);
 }
 
 .container-leitura {
     text-align: center;
     width: 90%;
     max-width: 1100px;
-    margin: auto;
+    margin: 5.5rem auto 0 auto;
 }
 
 .container-leitura h3 {
     color: var(--ll-accent);
+}
+
+.mais-noticias {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.mais-noticias h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--ll-accent);
+    margin-top: 0;
+    margin-bottom: 1.75rem;
+}
+
+.container-leitura button {
+    background-color: var(--ll-accent);
+    color: var(--ll-on-accent);
+    margin-top: 0;
+    margin-bottom: 3rem;
+}
+
+.container-leitura button:hover {
+    background-color: var(--ll-accent-hover, #6b03c7);
+    color: var(--ll-on-accent);
 }
 
 .background-container-avaliacoes {
@@ -299,17 +314,6 @@
 }
 
 .conteudo-avaliacoes h3 {
-    color: var(--ll-accent);
-}
-
-
-.mais-noticias {
-    width: 80%;
-    margin: auto;
-}
-
-.mais-noticias h2 {
-    padding-top: 40px;
     color: var(--ll-accent);
 }
 
@@ -358,19 +362,24 @@
     }
 
     .background-container-cursos {
-        width: 80%;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
         max-width: 520px;
-        height: 300px;
-        margin: auto;
+        height: 280px;
     }
 
     .paineis-de-cursos {
+        position: relative;
+        z-index: 1;
         width: 90%;
         display: flex;
         flex-direction: column;
         margin: auto;
         gap: 30px;
-        margin-top: -300px;
+        margin-top: 0;
     }
 
     .mais-cursos {

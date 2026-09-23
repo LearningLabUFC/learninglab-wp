@@ -1,0 +1,156 @@
+/* Slider Gallery — Estilos do Editor Gutenberg */
+
+.ll-slider-gallery-editor {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	overflow: hidden;
+	background: #fff;
+}
+
+/* Placeholder */
+.ll-sg-placeholder .components-placeholder__fieldset {
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-top: 16px;
+}
+
+/* Header */
+.ll-sg-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 16px;
+	background: #f8f8f8;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.ll-sg-header-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #1e1e1e;
+}
+
+.ll-sg-count {
+	font-weight: 400;
+	font-size: 12px;
+	background: #e8eaf6;
+	color: #3858e9;
+	padding: 2px 8px;
+	border-radius: 99px;
+}
+
+/* Grade */
+.ll-sg-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+	gap: 8px;
+	padding: 16px;
+	min-height: 160px;
+	background: #fafafa;
+}
+
+/* Miniatura */
+.ll-sg-thumb {
+	position: relative;
+	aspect-ratio: 4 / 3;
+	border-radius: 6px;
+	overflow: hidden;
+	border: 2px solid transparent;
+	transition: border-color 0.2s ease, transform 0.15s ease;
+	background: #e0e0e0;
+}
+
+.ll-sg-thumb:hover {
+	border-color: #3858e9;
+	transform: scale(1.02);
+}
+
+.ll-sg-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	pointer-events: none;
+}
+
+/* Overlay com ações */
+.ll-sg-thumb-overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.55);
+	opacity: 0;
+	transition: opacity 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+}
+
+.ll-sg-thumb:hover .ll-sg-thumb-overlay {
+	opacity: 1;
+}
+
+.ll-sg-action {
+	width: 28px;
+	height: 28px;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform 0.15s ease;
+}
+
+.ll-sg-action:hover { transform: scale(1.15); }
+
+.ll-sg-action--remove { background: #d32f2f; color: #fff; font-size: 18px; }
+.ll-sg-action--remove:hover { background: #b71c1c; }
+
+.ll-sg-action--left,
+.ll-sg-action--right { background: rgba(255,255,255,0.9); color: #1e1e1e; font-size: 20px; }
+.ll-sg-action--left:hover,
+.ll-sg-action--right:hover { background: #fff; }
+
+/* Numeração */
+.ll-sg-thumb-index {
+	position: absolute;
+	top: 6px;
+	left: 6px;
+	background: rgba(0,0,0,0.6);
+	color: #fff;
+	font-size: 10px;
+	font-weight: 700;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+}
+
+/* Footer */
+.ll-sg-footer {
+	padding: 10px 16px;
+	background: #f0f4ff;
+	border-top: 1px solid #dde3ff;
+}
+
+.ll-sg-hint { font-size: 11.5px; color: #5c6bc0; }
+
+.ll-sg-inspector-hint {
+	font-size: 12px;
+	color: #757575;
+	margin-bottom: 12px;
+	line-height: 1.5;
+}

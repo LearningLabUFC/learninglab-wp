@@ -105,11 +105,15 @@ body.editor-styles-wrapper,
 /* Título principal do Post */
 .editor-post-title__input,
 .wp-block-post-title,
-.editor-styles-wrapper .editor-post-title__input {
+.editor-styles-wrapper .editor-post-title__input,
+.editor-styles-wrapper .wp-block-post-title,
+.edit-post-visual-editor__post-title-wrapper h1,
+.editor-post-title__block .editor-post-title__input {
 	font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+	font-size: 1.85rem !important;
 	font-weight: 700 !important;
 	color: #1e1e1e !important;
-	line-height: 1.25 !important;
+	line-height: 1.3 !important;
 	margin-bottom: 2rem !important;
 }
 

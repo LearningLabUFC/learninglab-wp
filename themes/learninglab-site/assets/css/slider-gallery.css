@@ -1,0 +1,149 @@
+/**
+ * Slider Gallery — Estilos do Frontend
+ *
+ * Carregado sob demanda quando o bloco slider-gallery está presente.
+ */
+
+/* ─── Wrapper externo ────────────────────────────────────────────────────── */
+.ll-slider-gallery-block {
+	margin: 2.5rem auto;
+	max-width: 900px;
+	width: 100%;
+	position: relative;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Suporte a alinhamentos wide/full do Gutenberg */
+.ll-slider-gallery-block.alignwide {
+	max-width: var(--wp--style--global--wide-size, 1200px);
+}
+
+.ll-slider-gallery-block.alignfull {
+	max-width: 100%;
+	border-radius: 0;
+}
+
+/* ─── Container Swiper ───────────────────────────────────────────────────── */
+.ll-slider-gallery-block .swiper {
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+}
+
+/* ─── Slides ─────────────────────────────────────────────────────────────── */
+.ll-slider-gallery-block .swiper-slide {
+	position: relative;
+	overflow: hidden;
+	background: #111;
+	aspect-ratio: 16 / 9;
+}
+
+.ll-slider-gallery-block .ll-sg-slide-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.4s ease;
+}
+
+.ll-slider-gallery-block .swiper-slide:hover .ll-sg-slide-img {
+	transform: scale(1.03);
+}
+
+/* ─── Legenda do slide ───────────────────────────────────────────────────── */
+.ll-slider-gallery-block .ll-sg-caption {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 20px 24px 16px;
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
+	color: #fff;
+	font-size: 0.9rem;
+	font-style: normal;
+	line-height: 1.4;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── Botões de navegação (prev/next) ────────────────────────────────────── */
+.ll-slider-gallery-block .swiper-button-prev,
+.ll-slider-gallery-block .swiper-button-next {
+	width: 44px;
+	height: 44px;
+	background: rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+	border-radius: 50%;
+	border: 1.5px solid rgba(255, 255, 255, 0.4);
+	color: #fff;
+	transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ll-slider-gallery-block .swiper-button-prev:hover,
+.ll-slider-gallery-block .swiper-button-next:hover {
+	background: rgba(255, 255, 255, 0.4);
+	transform: scale(1.08);
+}
+
+.ll-slider-gallery-block .swiper-button-prev::after,
+.ll-slider-gallery-block .swiper-button-next::after {
+	font-size: 16px;
+	font-weight: 700;
+}
+
+/* ─── Paginação (bullets) ────────────────────────────────────────────────── */
+.ll-slider-gallery-block .swiper-pagination {
+	bottom: 12px;
+}
+
+.ll-slider-gallery-block .swiper-pagination-bullet {
+	width: 8px;
+	height: 8px;
+	background: rgba(255, 255, 255, 0.5);
+	opacity: 1;
+	transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ll-slider-gallery-block .swiper-pagination-bullet-active {
+	background: #fff;
+	transform: scale(1.3);
+}
+
+/* ─── Responsividade mobile ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+	.ll-slider-gallery-block {
+		border-radius: 8px;
+		margin: 1.5rem auto;
+	}
+
+	.ll-slider-gallery-block .swiper-button-prev,
+	.ll-slider-gallery-block .swiper-button-next {
+		width: 36px;
+		height: 36px;
+	}
+
+	.ll-slider-gallery-block .swiper-button-prev::after,
+	.ll-slider-gallery-block .swiper-button-next::after {
+		font-size: 13px;
+	}
+
+	.ll-slider-gallery-block .ll-sg-caption {
+		font-size: 0.8rem;
+		padding: 16px 16px 12px;
+	}
+}
+
+@media (max-width: 480px) {
+	.ll-slider-gallery-block {
+		border-radius: 0;
+		margin: 1rem 0;
+		box-shadow: none;
+	}
+
+	.ll-slider-gallery-block .swiper-button-prev,
+	.ll-slider-gallery-block .swiper-button-next {
+		display: none;
+	}
+}

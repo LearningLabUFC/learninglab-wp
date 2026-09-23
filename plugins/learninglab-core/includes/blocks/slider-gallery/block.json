@@ -6,7 +6,7 @@
   "title": "Slider Gallery",
   "category": "media",
   "icon": "format-gallery",
-  "description": "Carrossel de imagens interativo com suporte a upload e biblioteca de mídia.",
+  "description": "Carrossel de imagens interativo com seleção múltipla, reordenação e Swiper.js.",
   "keywords": ["carrossel", "slider", "galeria", "imagens", "fotos"],
   "supports": {
     "html": false,
@@ -28,11 +28,42 @@
         }
       }
     },
-    "autoplay":       { "type": "boolean", "default": true },
-    "loop":           { "type": "boolean", "default": true },
-    "showCaptions":   { "type": "boolean", "default": false },
-    "autoplayDelay":  { "type": "number",  "default": 4000 },
-    "align":          { "type": "string",  "default": "" }
+    "imageSize": {
+      "type": "string",
+      "default": "large"
+    },
+    "linkTo": {
+      "type": "string",
+      "default": "none"
+    },
+    "displayNav": {
+      "type": "boolean",
+      "default": true
+    },
+    "displayBullets": {
+      "type": "boolean",
+      "default": true
+    },
+    "displayCaptions": {
+      "type": "boolean",
+      "default": false
+    },
+    "autoplay": {
+      "type": "boolean",
+      "default": true
+    },
+    "loop": {
+      "type": "boolean",
+      "default": true
+    },
+    "autoplayDelay": {
+      "type": "number",
+      "default": 4000
+    },
+    "align": {
+      "type": "string",
+      "default": ""
+    }
   },
   "editorScript": "file:../../../build/index.js",
   "editorStyle":  "file:../../../build/index.css",

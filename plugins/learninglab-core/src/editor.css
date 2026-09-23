@@ -1,156 +1,255 @@
-/* Slider Gallery — Estilos do Editor Gutenberg */
+/**
+ * Slider Gallery — Estilos do Editor Gutenberg
+ */
 
-.ll-slider-gallery-editor {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+.ll-slider-gallery-editor-wrap {
+	margin: 1.5rem 0;
+	position: relative;
+}
+
+/* ─── Inspector / Sidebar (Fiel ao MacMagazine) ────────────────────────── */
+.ll-sg-inspector-label {
+	font-size: 11px;
+	font-weight: 600;
+	color: #1e1e1e;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin-bottom: 8px;
+}
+
+.ll-sg-inspector-media-box {
 	border: 1px solid #e0e0e0;
-	border-radius: 8px;
-	overflow: hidden;
+	border-radius: 6px;
+	padding: 12px;
+	margin-bottom: 18px;
 	background: #fff;
-}
-
-/* Placeholder */
-.ll-sg-placeholder .components-placeholder__fieldset {
 	display: flex;
-	gap: 12px;
-	justify-content: center;
-	flex-wrap: wrap;
-	margin-top: 16px;
-}
-
-/* Header */
-.ll-sg-header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 12px 16px;
-	background: #f8f8f8;
-	border-bottom: 1px solid #e0e0e0;
-}
-
-.ll-sg-header-title {
-	display: flex;
-	align-items: center;
+	flex-direction: column;
 	gap: 8px;
+}
+
+.ll-sg-inspector-media-box-title {
+	display: flex;
+	align-items: center;
+	gap: 6px;
 	font-size: 13px;
 	font-weight: 600;
 	color: #1e1e1e;
+	margin-bottom: 4px;
 }
 
-.ll-sg-count {
-	font-weight: 400;
-	font-size: 12px;
-	background: #e8eaf6;
-	color: #3858e9;
-	padding: 2px 8px;
-	border-radius: 99px;
+.ll-sg-inspector-media-box-title .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+	color: #1e1e1e;
 }
 
-/* Grade */
-.ll-sg-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-	gap: 8px;
-	padding: 16px;
-	min-height: 160px;
-	background: #fafafa;
+.ll-sg-sidebar-btn-primary {
+	width: 100% !important;
+	justify-content: center !important;
+	background: #3858e9 !important;
+	color: #fff !important;
+	border-radius: 4px !important;
+	font-weight: 500 !important;
+	height: 36px !important;
 }
 
-/* Miniatura */
-.ll-sg-thumb {
-	position: relative;
-	aspect-ratio: 4 / 3;
-	border-radius: 6px;
+.ll-sg-sidebar-btn-primary:hover {
+	background: #2544d4 !important;
+}
+
+.ll-sg-sidebar-btn-secondary {
+	width: 100% !important;
+	justify-content: center !important;
+	background: #fff !important;
+	color: #3858e9 !important;
+	border: 1px solid #3858e9 !important;
+	border-radius: 4px !important;
+	font-weight: 500 !important;
+	height: 36px !important;
+}
+
+.ll-sg-sidebar-btn-secondary:hover {
+	background: #f0f4ff !important;
+}
+
+/* ─── In-Editor Preview do Carrossel ────────────────────────────────────── */
+.ll-sg-editor-preview {
+	border-radius: 8px;
 	overflow: hidden;
-	border: 2px solid transparent;
-	transition: border-color 0.2s ease, transform 0.15s ease;
-	background: #e0e0e0;
+	background: #fafafa;
+	border: 1px solid #e0e0e0;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 }
 
-.ll-sg-thumb:hover {
-	border-color: #3858e9;
-	transform: scale(1.02);
+.ll-sg-editor-slide {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	background: #111;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.ll-sg-thumb img {
+.ll-sg-editor-img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	display: block;
+	user-select: none;
 	pointer-events: none;
 }
 
-/* Overlay com ações */
-.ll-sg-thumb-overlay {
+.ll-sg-editor-caption {
 	position: absolute;
-	inset: 0;
-	background: rgba(0, 0, 0, 0.55);
-	opacity: 0;
-	transition: opacity 0.2s ease;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 16px 20px;
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+	color: #fff;
+	font-size: 13px;
+	line-height: 1.4;
+	pointer-events: none;
+}
+
+/* Setas do Editor com o estilo roxo idêntico ao Swiper da Home */
+.ll-sg-editor-arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background-color: #8204EE;
+	color: #fff;
+	border: none;
+	cursor: pointer;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 6px;
-}
-
-.ll-sg-thumb:hover .ll-sg-thumb-overlay {
-	opacity: 1;
-}
-
-.ll-sg-action {
-	width: 28px;
-	height: 28px;
-	border: none;
-	border-radius: 50%;
-	cursor: pointer;
-	font-size: 16px;
+	font-size: 20px;
 	font-weight: 700;
 	line-height: 1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transition: transform 0.15s ease;
+	z-index: 10;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.ll-sg-action:hover { transform: scale(1.15); }
+.ll-sg-editor-arrow:hover {
+	background-color: #6f03cb;
+	transform: translateY(-50%) scale(1.08);
+}
 
-.ll-sg-action--remove { background: #d32f2f; color: #fff; font-size: 18px; }
-.ll-sg-action--remove:hover { background: #b71c1c; }
+.ll-sg-editor-arrow--prev {
+	left: 12px;
+}
 
-.ll-sg-action--left,
-.ll-sg-action--right { background: rgba(255,255,255,0.9); color: #1e1e1e; font-size: 20px; }
-.ll-sg-action--left:hover,
-.ll-sg-action--right:hover { background: #fff; }
+.ll-sg-editor-arrow--next {
+	right: 12px;
+}
 
-/* Numeração */
-.ll-sg-thumb-index {
+/* Botão Editar Galeria */
+.ll-sg-editor-edit-btn {
 	position: absolute;
-	top: 6px;
-	left: 6px;
-	background: rgba(0,0,0,0.6);
-	color: #fff;
-	font-size: 10px;
-	font-weight: 700;
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-	display: flex;
+	top: 12px;
+	right: 12px;
+	display: inline-flex;
 	align-items: center;
-	justify-content: center;
-	pointer-events: none;
-}
-
-/* Footer */
-.ll-sg-footer {
-	padding: 10px 16px;
-	background: #f0f4ff;
-	border-top: 1px solid #dde3ff;
-}
-
-.ll-sg-hint { font-size: 11.5px; color: #5c6bc0; }
-
-.ll-sg-inspector-hint {
+	gap: 6px;
+	background: rgba(0, 0, 0, 0.7);
+	color: #fff;
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	padding: 6px 12px;
+	border-radius: 20px;
 	font-size: 12px;
-	color: #757575;
-	margin-bottom: 12px;
-	line-height: 1.5;
+	font-weight: 500;
+	cursor: pointer;
+	z-index: 10;
+	backdrop-filter: blur(4px);
+	transition: background 0.2s ease;
+}
+
+.ll-sg-editor-edit-btn:hover {
+	background: rgba(0, 0, 0, 0.9);
+}
+
+.ll-sg-editor-edit-btn .dashicons {
+	font-size: 14px;
+	width: 14px;
+	height: 14px;
+}
+
+/* Bullets no Editor */
+.ll-sg-editor-bullets {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+	padding: 10px 0;
+	background: #fff;
+}
+
+.ll-sg-editor-bullet {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: #8204EE;
+	opacity: 0.4;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.ll-sg-editor-bullet.is-active {
+	opacity: 1;
+	transform: scale(1.15);
+}
+
+/* Faixa de Miniaturas */
+.ll-sg-editor-thumb-strip {
+	display: flex;
+	gap: 8px;
+	padding: 10px 14px;
+	background: #f8f8f8;
+	border-top: 1px solid #e0e0e0;
+	overflow-x: auto;
+}
+
+.ll-sg-editor-thumb-item {
+	position: relative;
+	width: 60px;
+	height: 45px;
+	border-radius: 4px;
+	overflow: hidden;
+	cursor: pointer;
+	flex-shrink: 0;
+	border: 2px solid transparent;
+	transition: border-color 0.2s ease;
+}
+
+.ll-sg-editor-thumb-item.is-active {
+	border-color: #8204EE;
+}
+
+.ll-sg-editor-thumb-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.ll-sg-editor-thumb-num {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	background: rgba(0, 0, 0, 0.65);
+	color: #fff;
+	font-size: 9px;
+	font-weight: 700;
+	padding: 1px 4px;
+	border-radius: 2px;
 }

@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				config = JSON.parse(rawData);
 			}
 		} catch (e) {
-			// fallback para padrão se json der erro
 			config = {};
 		}
 
@@ -35,16 +34,25 @@ document.addEventListener('DOMContentLoaded', function () {
 			keyboard: {
 				enabled: true,
 			},
-			navigation: {
-				prevEl: prevEl,
-				nextEl: nextEl,
-			},
-			pagination: {
-				el: paginationEl,
-				clickable: true,
-			},
 		};
 
+		// Navegação por setas (se ativado e presente no DOM)
+		if (prevEl && nextEl) {
+			swiperOptions.navigation = {
+				prevEl: prevEl,
+				nextEl: nextEl,
+			};
+		}
+
+		// Paginação por bullets (se ativado e presente no DOM)
+		if (paginationEl) {
+			swiperOptions.pagination = {
+				el: paginationEl,
+				clickable: true,
+			};
+		}
+
+		// Autoplay
 		if (config.autoplay) {
 			swiperOptions.autoplay = config.autoplay;
 		}

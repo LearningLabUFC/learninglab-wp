@@ -1,7 +1,7 @@
 /**
  * Slider Gallery — Inicializador do Swiper no Frontend
  *
- * Suporta múltiplas instâncias na mesma página com configurações individuais.
+ * Suporta múltiplas instâncias com setas laterais externas e paginação inferior.
  */
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -22,9 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			config = {};
 		}
 
-		var prevEl = sliderEl.querySelector('.swiper-button-prev');
-		var nextEl = sliderEl.querySelector('.swiper-button-next');
-		var paginationEl = sliderEl.querySelector('.swiper-pagination');
+		var block = sliderEl.closest('.ll-slider-gallery-block') || sliderEl.parentElement;
+		var prevEl = block ? block.querySelector('.swiper-button-prev') : null;
+		var nextEl = block ? block.querySelector('.swiper-button-next') : null;
+		var paginationEl = block ? block.querySelector('.swiper-pagination') : null;
 
 		var swiperOptions = {
 			slidesPerView: 1,
@@ -36,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			},
 		};
 
-		// Navegação por setas (se ativado e presente no DOM)
+		// Navegação por setas (fora da imagem nas laterais)
 		if (prevEl && nextEl) {
 			swiperOptions.navigation = {
 				prevEl: prevEl,
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			};
 		}
 
-		// Paginação por bullets (se ativado e presente no DOM)
+		// Paginação por pontos (fora e logo abaixo da imagem)
 		if (paginationEl) {
 			swiperOptions.pagination = {
 				el: paginationEl,

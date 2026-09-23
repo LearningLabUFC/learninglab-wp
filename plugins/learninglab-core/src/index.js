@@ -1,7 +1,7 @@
 /**
  * Slider Gallery — Bloco Gutenberg
  *
- * Editor (React/JSX) — interface fiel à do MacMagazine e com Swiper preview.
+ * Editor (React/JSX) — 100% em português com setas nas laterais e pontos abaixo.
  */
 
 import { registerBlockType } from '@wordpress/blocks';
@@ -27,7 +27,7 @@ import { useState } from '@wordpress/element';
 import './editor.css';
 import metadata from '../includes/blocks/slider-gallery/block.json';
 
-// Ícone idêntico ao do bloco no Gutenberg do MacMagazine (slider com 2 barras laterais)
+// Ícone do carrossel
 const sliderGalleryIcon = (
 	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<rect x="2" y="6" width="3" height="12" rx="1.5" fill="currentColor" opacity="0.4" />
@@ -51,7 +51,7 @@ function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps({ className: 'll-slider-gallery-editor-wrap' });
 	const [activeSlide, setActiveSlide] = useState(0);
 
-	// Normaliza as imagens vindas do MediaUpload / MediaPlaceholder
+	// Normaliza as imagens vindas do seletor de mídia
 	const handleSelectImages = (media) => {
 		const mediaArray = Array.isArray(media) ? media : [media];
 		const formatted = mediaArray.map((img) => ({
@@ -96,7 +96,7 @@ function Edit({ attributes, setAttributes }) {
 						render={({ open }) => (
 							<ToolbarButton
 								icon="edit"
-								label={__('Editar galeria', 'learninglab-core')}
+								label={__('Editar e reordenar galeria', 'learninglab-core')}
 								onClick={open}
 							/>
 						)}
@@ -106,15 +106,15 @@ function Edit({ attributes, setAttributes }) {
 		</BlockControls>
 	);
 
-	// ─── Sidebar / InspectorControls (idêntico ao MacMagazine) ─────────────
+	// ─── Painel Lateral (Configurações em Português) ───────────────────────
 	const inspector = (
 		<InspectorControls>
-			<PanelBody title={__('Block Settings', 'learninglab-core')} initialOpen={true}>
-				<div className="ll-sg-inspector-label">{__('IMAGES', 'learninglab-core')}</div>
+			<PanelBody title={__('Configurações do Carrossel', 'learninglab-core')} initialOpen={true}>
+				<div className="ll-sg-inspector-label">{__('IMAGENS', 'learninglab-core')}</div>
 				<div className="ll-sg-inspector-media-box">
 					<div className="ll-sg-inspector-media-box-title">
 						<span className="dashicons dashicons-format-gallery"></span>
-						<span>{__('Images', 'learninglab-core')}</span>
+						<span>{__('Imagens', 'learninglab-core')}</span>
 					</div>
 
 					<MediaUploadCheck>
@@ -149,7 +149,7 @@ function Edit({ attributes, setAttributes }) {
 									className="ll-sg-sidebar-btn-secondary"
 									onClick={open}
 								>
-									{__('Biblioteca de mídia', 'learninglab-core')}
+									{__('Biblioteca de Mídia', 'learninglab-core')}
 								</Button>
 							)}
 						/>
@@ -157,54 +157,54 @@ function Edit({ attributes, setAttributes }) {
 				</div>
 
 				<SelectControl
-					label={__('IMAGES SIZE', 'learninglab-core')}
+					label={__('TAMANHO DAS IMAGENS', 'learninglab-core')}
 					value={imageSize}
 					options={[
-						{ label: 'thumbnail', value: 'thumbnail' },
-						{ label: 'medium', value: 'medium' },
-						{ label: 'large', value: 'large' },
-						{ label: 'full', value: 'full' },
+						{ label: __('Miniatura', 'learninglab-core'), value: 'thumbnail' },
+						{ label: __('Médio', 'learninglab-core'), value: 'medium' },
+						{ label: __('Grande', 'learninglab-core'), value: 'large' },
+						{ label: __('Tamanho Original', 'learninglab-core'), value: 'full' },
 					]}
 					onChange={(val) => setAttributes({ imageSize: val })}
 				/>
 
 				<SelectControl
-					label={__('LINK TO', 'learninglab-core')}
+					label={__('VINCULAR A', 'learninglab-core')}
 					value={linkTo}
 					options={[
-						{ label: __('None', 'learninglab-core'), value: 'none' },
-						{ label: __('Media File', 'learninglab-core'), value: 'file' },
-						{ label: __('Attachment Page', 'learninglab-core'), value: 'attachment' },
+						{ label: __('Nenhum', 'learninglab-core'), value: 'none' },
+						{ label: __('Arquivo de Mídia', 'learninglab-core'), value: 'file' },
+						{ label: __('Página do Anexo', 'learninglab-core'), value: 'attachment' },
 					]}
 					onChange={(val) => setAttributes({ linkTo: val })}
 				/>
 
 				<ToggleControl
-					label={__('Display Previous & Next Buttons', 'learninglab-core')}
+					label={__('Exibir botões Anterior e Próximo', 'learninglab-core')}
 					checked={displayNav}
 					onChange={(val) => setAttributes({ displayNav: val })}
 				/>
 
 				<ToggleControl
-					label={__('Display Bullets', 'learninglab-core')}
+					label={__('Exibir pontos indicadores', 'learninglab-core')}
 					checked={displayBullets}
 					onChange={(val) => setAttributes({ displayBullets: val })}
 				/>
 
 				<ToggleControl
-					label={__('Display Captions', 'learninglab-core')}
+					label={__('Exibir legendas das fotos', 'learninglab-core')}
 					checked={displayCaptions}
 					onChange={(val) => setAttributes({ displayCaptions: val })}
 				/>
 
 				<ToggleControl
-					label={__('Autoplay', 'learninglab-core')}
+					label={__('Reprodução automática (Autoplay)', 'learninglab-core')}
 					checked={autoplay}
 					onChange={(val) => setAttributes({ autoplay: val })}
 				/>
 
 				<ToggleControl
-					label={__('Loop infinito', 'learninglab-core')}
+					label={__('Repetição contínua (Loop)', 'learninglab-core')}
 					checked={loop}
 					onChange={(val) => setAttributes({ loop: val })}
 				/>
@@ -212,7 +212,7 @@ function Edit({ attributes, setAttributes }) {
 		</InspectorControls>
 	);
 
-	// ─── Estado Vazio: MediaPlaceholder padrão do Gutenberg ────────────────
+	// ─── Estado Vazio: MediaPlaceholder padrão em Português ────────────────
 	if (images.length === 0) {
 		return (
 			<div {...blockProps}>
@@ -221,9 +221,9 @@ function Edit({ attributes, setAttributes }) {
 				<MediaPlaceholder
 					icon={<span className="dashicons dashicons-format-gallery" />}
 					labels={{
-						title: __('Galeria', 'learninglab-core'),
+						title: __('Galeria de Fotos', 'learninglab-core'),
 						instructions: __(
-							'Drag images, upload new ones or select files from your library.',
+							'Arraste imagens, envie novas fotos ou selecione arquivos da sua biblioteca de mídia.',
 							'learninglab-core'
 						),
 					}}
@@ -237,7 +237,7 @@ function Edit({ attributes, setAttributes }) {
 		);
 	}
 
-	// ─── Estado com Imagens: Preview do Slider com estilo do tema ─────────
+	// ─── Estado com Imagens: Preview com Setas nas Laterais e Pontos Abaixo ─
 	const currentImage = images[activeSlide] || images[0];
 
 	return (
@@ -246,65 +246,68 @@ function Edit({ attributes, setAttributes }) {
 			{inspector}
 
 			<div className="ll-sg-editor-preview">
-				<div className="ll-sg-editor-slide">
-					<img
-						src={currentImage.url || currentImage.fullUrl}
-						alt={currentImage.alt || ''}
-						className="ll-sg-editor-img"
-					/>
-
-					{displayCaptions && currentImage.caption && (
-						<div className="ll-sg-editor-caption">{currentImage.caption}</div>
-					)}
-
-					{/* Setas com o estilo idêntico ao Swiper da home */}
+				{/* Linha horizontal: Seta Esquerda + Imagem Central + Seta Direita */}
+				<div className="ll-sg-editor-carousel-row">
 					{displayNav && images.length > 1 && (
-						<>
-							<button
-								type="button"
-								className="ll-sg-editor-arrow ll-sg-editor-arrow--prev"
-								onClick={handlePrev}
-								aria-label={__('Slide anterior', 'learninglab-core')}
-							>
-								‹
-							</button>
-							<button
-								type="button"
-								className="ll-sg-editor-arrow ll-sg-editor-arrow--next"
-								onClick={handleNext}
-								aria-label={__('Próximo slide', 'learninglab-core')}
-							>
-								›
-							</button>
-						</>
+						<button
+							type="button"
+							className="ll-sg-editor-arrow ll-sg-editor-arrow--prev"
+							onClick={handlePrev}
+							title={__('Slide anterior', 'learninglab-core')}
+						>
+							‹
+						</button>
 					)}
 
-					{/* Botão de editar galeria sobreposto */}
-					<MediaUploadCheck>
-						<MediaUpload
-							onSelect={handleSelectImages}
-							allowedTypes={['image']}
-							multiple
-							gallery
-							value={imageIds}
-							render={({ open }) => (
-								<button
-									type="button"
-									className="ll-sg-editor-edit-btn"
-									onClick={open}
-									title={__('Editar e reordenar imagens', 'learninglab-core')}
-								>
-									<span className="dashicons dashicons-edit"></span>
-									<span>{__('Editar galeria', 'learninglab-core')} ({images.length})</span>
-								</button>
-							)}
+					<div className="ll-sg-editor-slide">
+						<img
+							src={currentImage.url || currentImage.fullUrl}
+							alt={currentImage.alt || ''}
+							className="ll-sg-editor-img"
 						/>
-					</MediaUploadCheck>
+
+						{displayCaptions && currentImage.caption && (
+							<div className="ll-sg-editor-caption">{currentImage.caption}</div>
+						)}
+
+						{/* Botão de editar galeria sobreposto no slide */}
+						<MediaUploadCheck>
+							<MediaUpload
+								onSelect={handleSelectImages}
+								allowedTypes={['image']}
+								multiple
+								gallery
+								value={imageIds}
+								render={({ open }) => (
+									<button
+										type="button"
+										className="ll-sg-editor-edit-btn"
+										onClick={open}
+										title={__('Editar e reordenar fotos', 'learninglab-core')}
+									>
+										<span className="dashicons dashicons-edit"></span>
+										<span>{__('Editar galeria', 'learninglab-core')} ({images.length})</span>
+									</button>
+								)}
+							/>
+						</MediaUploadCheck>
+					</div>
+
+					{displayNav && images.length > 1 && (
+						<button
+							type="button"
+							className="ll-sg-editor-arrow ll-sg-editor-arrow--next"
+							onClick={handleNext}
+							title={__('Próximo slide', 'learninglab-core')}
+						>
+							›
+						</button>
+					)}
 				</div>
 
-				{/* Bullets de paginação no preview */}
+				{/* Pontos indicadores posicionados FORA e LOGO ABAIXO da imagem */}
 				{displayBullets && images.length > 1 && (
-					<div className="ll-sg-editor-bullets">
+					<div className="ll-sg-editor-bullets" role="tablist" aria-label={__('Pontos indicadores', 'learninglab-core')}>
 						{images.map((_, idx) => (
 							<button
 								key={idx}
@@ -316,12 +319,13 @@ function Edit({ attributes, setAttributes }) {
 									e.stopPropagation();
 									setActiveSlide(idx);
 								}}
+								aria-label={`Slide ${idx + 1}`}
 							/>
 						))}
 					</div>
 				)}
 
-				{/* Faixa de miniaturas abaixo para fácil alternância */}
+				{/* Faixa de miniaturas abaixo dos pontos */}
 				{images.length > 1 && (
 					<div className="ll-sg-editor-thumb-strip">
 						{images.map((img, idx) => (
@@ -331,6 +335,7 @@ function Edit({ attributes, setAttributes }) {
 									idx === activeSlide ? 'is-active' : ''
 								}`}
 								onClick={() => setActiveSlide(idx)}
+								title={`Ver imagem ${idx + 1}`}
 							>
 								<img src={img.url || img.fullUrl} alt="" />
 								<span className="ll-sg-editor-thumb-num">{idx + 1}</span>
@@ -347,5 +352,5 @@ function Edit({ attributes, setAttributes }) {
 registerBlockType(metadata.name, {
 	icon: sliderGalleryIcon,
 	edit: Edit,
-	save: () => null, // Renderização server-side via render.php
+	save: () => null,
 });

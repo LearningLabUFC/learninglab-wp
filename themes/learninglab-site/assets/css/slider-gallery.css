@@ -1,38 +1,48 @@
 /**
  * Slider Gallery — Estilos do Frontend
  *
- * Visual idêntico ao Swiper da Home (cores var(--ll-accent), setas circulares e bullets).
+ * Setas externas (à esquerda e direita da imagem) e pontos indicadores abaixo.
+ * Visual idêntico ao Swiper da Home (cor var(--ll-accent, #8204EE)).
  */
 
 /* ─── Wrapper externo ────────────────────────────────────────────────────── */
 .ll-slider-gallery-block {
 	margin: 2.5rem auto;
-	max-width: 900px;
+	max-width: 960px;
 	width: 100%;
 	position: relative;
-	border-radius: 12px;
-	overflow: hidden;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Suporte a alinhamentos wide/full do Gutenberg */
 .ll-slider-gallery-block.alignwide {
-	max-width: var(--wp--style--global--wide-size, 1100px);
+	max-width: var(--wp--style--global--wide-size, 1160px);
 }
 
 .ll-slider-gallery-block.alignfull {
 	max-width: 100%;
-	border-radius: 0;
 	margin-left: calc(-50vw + 50%);
 	margin-right: calc(-50vw + 50%);
+	padding: 0 16px;
 }
 
-/* ─── Container Swiper ───────────────────────────────────────────────────── */
-.ll-slider-gallery-block .swiper {
+/* ─── Linha horizontal: Seta Esquerda + Imagem Central + Seta Direita ─────── */
+.ll-slider-gallery-block .ll-sg-carousel-row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
 	width: 100%;
+}
+
+/* ─── Container Swiper (Imagem Central) ─────────────────────────────────── */
+.ll-slider-gallery-block .swiper {
+	flex: 1;
+	min-width: 0;
 	height: auto;
 	position: relative;
-	border-radius: inherit;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* ─── Slides ─────────────────────────────────────────────────────────────── */
@@ -76,36 +86,34 @@
 	z-index: 5;
 }
 
-/* ─── Setas de Navegação (IDÊNTICAS AO SWIPER DA HOME) ───────────────────── */
+/* ─── Setas de Navegação FORA DA IMAGEM (À Esquerda e À Direita) ────────── */
 .ll-slider-gallery-block .swiper-button-prev,
 .ll-slider-gallery-block .swiper-button-next {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 30px;
-	height: 30px;
+	position: static !important;
+	transform: none !important;
+	margin: 0 !important;
+	top: auto !important;
+	left: auto !important;
+	right: auto !important;
+	bottom: auto !important;
+	flex-shrink: 0;
+	width: 34px;
+	height: 34px;
 	border-radius: 50%;
 	background-color: var(--ll-accent, #8204EE);
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	cursor: pointer;
 	z-index: 10;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-	transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.ll-slider-gallery-block .swiper-button-prev {
-	left: 14px;
-}
-
-.ll-slider-gallery-block .swiper-button-next {
-	right: 14px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+	transition: background-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
 }
 
 .ll-slider-gallery-block .swiper-button-prev:hover,
 .ll-slider-gallery-block .swiper-button-next:hover {
 	background-color: var(--ll-accent-hover, #6f03cb);
-	transform: translateY(-50%) scale(1.08);
+	transform: scale(1.12) !important;
 }
 
 .ll-slider-gallery-block .swiper-button-prev::after,
@@ -115,36 +123,67 @@
 	font-weight: bold;
 }
 
-/* ─── Paginação Bullets (IDÊNTICOS AO SWIPER DA HOME) ────────────────────── */
+.ll-slider-gallery-block .swiper-button-disabled {
+	opacity: 0.35 !important;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+/* ─── Pontos Indicadores (Bullets) FORA E LOGO ABAIXO DA IMAGEM ─────────── */
 .ll-slider-gallery-block .swiper-pagination {
-	position: absolute;
-	bottom: 12px;
-	left: 0;
-	right: 0;
-	display: flex;
-	justify-content: center;
+	position: relative !important;
+	margin-top: 16px !important;
+	margin-bottom: 0 !important;
+	top: auto !important;
+	bottom: auto !important;
+	left: auto !important;
+	right: auto !important;
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+	gap: 8px !important;
 	z-index: 10;
 }
 
 .ll-slider-gallery-block .swiper-pagination-bullet {
-	width: 12px;
-	height: 12px;
-	margin: 0 6px;
-	background-color: var(--ll-accent, #8204EE);
-	opacity: 0.5;
+	width: 10px;
+	height: 10px;
+	margin: 0 !important;
+	background-color: var(--ll-accent, #8204EE) !important;
+	opacity: 0.35 !important;
 	border-radius: 50%;
-	transition: opacity 0.2s ease, transform 0.2s ease;
+	cursor: pointer;
+	transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
 }
 
 .ll-slider-gallery-block .swiper-pagination-bullet-active {
-	opacity: 1;
+	opacity: 1 !important;
+	transform: scale(1.3) !important;
 }
 
 /* ─── Responsividade ─────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
 	.ll-slider-gallery-block {
 		margin: 1.5rem auto;
+	}
+
+	.ll-slider-gallery-block .ll-sg-carousel-row {
+		gap: 10px;
+	}
+
+	.ll-slider-gallery-block .swiper {
 		border-radius: 8px;
+	}
+
+	.ll-slider-gallery-block .swiper-button-prev,
+	.ll-slider-gallery-block .swiper-button-next {
+		width: 30px;
+		height: 30px;
+	}
+
+	.ll-slider-gallery-block .swiper-button-prev::after,
+	.ll-slider-gallery-block .swiper-button-next::after {
+		font-size: 15px;
 	}
 
 	.ll-slider-gallery-block .ll-sg-caption {
@@ -154,19 +193,18 @@
 }
 
 @media (max-width: 480px) {
-	.ll-slider-gallery-block {
-		border-radius: 0;
-		margin: 1rem 0;
+	.ll-slider-gallery-block .ll-sg-carousel-row {
+		gap: 6px;
 	}
 
 	.ll-slider-gallery-block .swiper-button-prev,
 	.ll-slider-gallery-block .swiper-button-next {
-		width: 28px;
-		height: 28px;
+		width: 26px;
+		height: 26px;
 	}
 
 	.ll-slider-gallery-block .swiper-button-prev::after,
 	.ll-slider-gallery-block .swiper-button-next::after {
-		font-size: 14px;
+		font-size: 13px;
 	}
 }

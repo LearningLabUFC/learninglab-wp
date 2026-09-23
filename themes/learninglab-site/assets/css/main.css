@@ -88,13 +88,22 @@ button:hover {
     transform: scale(1.05);
 }
 
+.wp-block-search__inside-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .wp-block-search__input {
+    box-sizing: border-box;
     border: 1px solid var(--ll-border-strong);
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
-    height: 2rem;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 15px;
+    height: 42px;
+    line-height: 40px;
     transition: border-color 0.3s ease;
+    flex-grow: 1;
 }
 
 .wp-block-search__input:focus {
@@ -104,20 +113,34 @@ button:hover {
 }
 
 .wp-block-search__button {
-    display: flex;
+    box-sizing: border-box;
+    height: 42px;
+    padding: 0 16px;
+    margin: 0;
+    display: inline-flex;
     align-items: center;
-    background-color: var(--ll-accent-focus);
+    justify-content: center;
+    background-color: var(--ll-accent);
+    color: var(--ll-on-accent);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    height: 0.75rem;
+    flex-shrink: 0;
 }
-
 
 .wp-block-search__button:hover {
     background-color: var(--ll-accent-hover);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: none;
+}
+
+.wp-block-search__button svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    display: block;
 }
 
 

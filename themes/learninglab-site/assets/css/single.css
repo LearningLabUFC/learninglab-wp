@@ -63,12 +63,8 @@ body .cabecalho {
 
 
 
-.content a {
-  color: var(--ll-accent);
-}
-
 .content a:hover {
-  color: var(--ll-accent);
+  color: var(--ll-accent-hover, #6b03c7);
 }
 
 .nome {

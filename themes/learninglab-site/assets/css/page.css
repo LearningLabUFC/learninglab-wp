@@ -1,7 +1,11 @@
-
 .container {
-  padding: 2rem;
-  line-height: 1.5;
+  width: 100%;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem 1rem 4rem 1rem;
+  box-sizing: border-box;
+  line-height: 1.6;
 }
 
 .container-header {
@@ -120,19 +124,42 @@
 }
 
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-
-
-.container .cursos-futuros, .cursos-passados {
+/* ─── Seções de Cursos (Página Nossos Cursos) ───────────────────────────── */
+.container-nossos-cursos section,
+.cursos-em-andamento,
+.cursos-futuros,
+.cursos-passados {
+  margin-bottom: 4rem;
   text-align: left;
 }
 
-/* Estilos de card de cursos foram movidos para cards.css */
+.container-nossos-cursos section:last-child,
+.cursos-passados:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Títulos de cada seção para separar com elegância e ritmo */
+.container-nossos-cursos h2,
+.cursos-em-andamento h2,
+.cursos-futuros h2,
+.cursos-passados h2 {
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--ll-accent, #8204EE);
+  line-height: 1.3;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid rgba(130, 4, 238, 0.15);
+  text-align: left;
+}
+
+.container-nossos-cursos .cursos-passados p {
+  color: var(--ll-text-faint, #777);
+  font-style: italic;
+  margin: 1.5rem 0;
+}
 
 
 @media only screen and (max-width: 768px) {

@@ -7,19 +7,65 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,700&display=swap");
 
-/* Tipografia global da área de edição */
+/* ─── Variáveis Globais de Largura do Gutenberg ──────────────────────────── */
+:root {
+	--wp--style--global--content-size: 1100px !important;
+	--wp--style--global--wide-size: 1200px !important;
+}
+
+/* ─── Tipografia global da área de edição ────────────────────────────────── */
 body,
-.editor-styles-wrapper,
-.wp-block-post-content,
-.edit-post-visual-editor,
-.block-editor-block-list__layout {
+.editor-styles-wrapper {
 	font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 	color: #2d2d2d;
 	line-height: 1.85;
 	font-size: 1.18rem;
-	max-width: 1100px;
-	margin-left: auto;
-	margin-right: auto;
+}
+
+/* ─── Forçar Largura de 1100px no Gutenberg ──────────────────────────────── */
+/* 1. Container raiz do editor */
+.editor-styles-wrapper .is-root-container,
+.is-root-container.block-editor-block-list__layout {
+	max-width: 1100px !important;
+	width: 100% !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-left: 1rem !important;
+	padding-right: 1rem !important;
+	box-sizing: border-box !important;
+}
+
+/* 2. Todos os blocos filhos e títulos no editor */
+.editor-styles-wrapper .is-root-container > .wp-block:not([data-align="full"]):not([data-align="wide"]),
+.editor-styles-wrapper .is-root-container > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
+.editor-styles-wrapper .wp-block:not([data-align="full"]):not([data-align="wide"]),
+.is-root-container > .wp-block:not([data-align="full"]):not([data-align="wide"]),
+.is-root-container > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
+.block-editor-block-list__layout.is-root-container > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
+.wp-block:not([data-align="full"]):not([data-align="wide"]),
+.wp-block[data-align="none"],
+.editor-post-title__block,
+.editor-post-title__input,
+.wp-block-post-title,
+.edit-post-visual-editor__post-title-wrapper {
+	max-width: 1100px !important;
+	width: 100% !important;
+	box-sizing: border-box !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+/* 3. Blocos Wide e Full */
+.editor-styles-wrapper .is-root-container > .wp-block[data-align="wide"],
+.is-root-container > .wp-block[data-align="wide"],
+.wp-block[data-align="wide"] {
+	max-width: 1200px !important;
+}
+
+.editor-styles-wrapper .is-root-container > .wp-block[data-align="full"],
+.is-root-container > .wp-block[data-align="full"],
+.wp-block[data-align="full"] {
+	max-width: 100% !important;
 }
 
 /* Título principal do Post */

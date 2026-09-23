@@ -11,13 +11,7 @@ get_header(); ?>
     </div>
 </div>
 
-<div class="container">
-
-    <p>Um dos setores de maior destaque no LearningLab é o de cursos. Ao longo da nossa história, já ministramos 7 cursos e impactamos mais de 150 estudantes com eles — 130 deles sendo certificados!</p>
-
-    <p>Nessa página, você pode conferir todos os cursos já ministrados pelo LearningLab, bem como os que ainda estão por vir.</p>
-
-    <p><strong>Dica útil:</strong> clique ou toque sobre um curso para realizar a inscrição (caso ela esteja aberta) ou visualizar detalhes sobre ele.</p>
+<div class="container container-nossos-cursos">
 
 
     <?php

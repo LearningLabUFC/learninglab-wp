@@ -38,34 +38,23 @@ function membros_shortcode($atts)
             $post_obj = $membros[0];
             $post_id  = $post_obj->ID;
 
-            $formado       = function_exists('is_membro_formado') ? is_membro_formado($post_id) : false;
-            $class_formado = $formado ? ' formado' : '';
-
             $nome_completo = get_the_title($post_id);
             $partes = explode(' ', trim($nome_completo));
             if (count($partes) <= 1) {
-                $nome_html = '<span class="membro-primeiro-nome">' . esc_html($nome_completo) . '</span><br><span class="membro-sobrenome">&nbsp;</span>';
+                $nome_html = '<span class="membro-primeiro-nome">' . esc_html($nome_completo) . '</span><span class="membro-sobrenome">&nbsp;</span>';
             } else {
                 $sobrenome = array_pop($partes);
                 $primeiro_nomes = implode(' ', $partes);
-                $nome_html = '<span class="membro-primeiro-nome">' . esc_html($primeiro_nomes) . '</span><br><span class="membro-sobrenome">' . esc_html($sobrenome) . '</span>';
+                $nome_html = '<span class="membro-primeiro-nome">' . esc_html($primeiro_nomes) . '</span><span class="membro-sobrenome">' . esc_html($sobrenome) . '</span>';
             }
 
             $imagem = get_the_post_thumbnail($post_id, 'thumbnail', array('class' => 'attachment-thumbnail size-thumbnail wp-post-image'));
 
-            $output .= '<div class="membro-item' . $class_formado . '">';
-            $output .= '<i class="fa-solid fa-graduation-cap icon-formado"></i>';
+            $output .= '<div class="membro-item">';
             if ($imagem) {
                 $output .= '<div class="membro-avatar">' . $imagem . '</div>';
             }
             $output .= '<h4 class="membro-nome">' . $nome_html . '</h4>';
-
-            if (function_exists('learninglab_render_membro_socials')) {
-                ob_start();
-                learninglab_render_membro_socials($post_id);
-                $output .= ob_get_clean();
-            }
-
             $output .= '</div>';
 
             $membros_count++;

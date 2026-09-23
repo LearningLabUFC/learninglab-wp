@@ -33,18 +33,18 @@
 }
 
 /* ─── Cabeçalhos (Ritmo Vertical: espaço maior antes, menor depois) ───────── */
-.content h1,
-.entry-content h1,
-.content h2,
-.entry-content h2,
-.content h3,
-.entry-content h3,
-.content h4,
-.entry-content h4,
-.content h5,
-.entry-content h5,
-.content h6,
-.entry-content h6 {
+.content h1:not(.membro-nome),
+.entry-content h1:not(.membro-nome),
+.content h2:not(.membro-nome),
+.entry-content h2:not(.membro-nome),
+.content h3:not(.membro-nome),
+.entry-content h3:not(.membro-nome),
+.content h4:not(.membro-nome):not(.membro-item *),
+.entry-content h4:not(.membro-nome):not(.membro-item *),
+.content h5:not(.membro-nome),
+.entry-content h5:not(.membro-nome),
+.content h6:not(.membro-nome),
+.entry-content h6:not(.membro-nome) {
 	font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 	letter-spacing: -0.01em;
 	text-align: left;
@@ -66,15 +66,15 @@
 .entry-content h3 {
 	color: var(--ll-accent, #8204EE);
 	font-size: 1.4rem;
-	font-weight: 600;
+	font-weight: 700;
 	line-height: 1.35;
 	margin-top: 2.25rem;
 	margin-bottom: 0.75rem;
 	padding-top: 0;
 }
 
-.content h4,
-.entry-content h4 {
+.content h4:not(.membro-nome):not(.membro-item *),
+.entry-content h4:not(.membro-nome):not(.membro-item *) {
 	color: var(--ll-text, #2d2d2d);
 	font-size: 1.2rem;
 	font-weight: 600;
@@ -222,18 +222,81 @@
 .content .wp-block-image,
 .entry-content .wp-block-image,
 .content figure.wp-block-image,
-.entry-content figure.wp-block-image {
-	margin: 2.25rem 0;
+.entry-content figure.wp-block-image,
+.content figure,
+.entry-content figure {
+	margin-top: 2.25rem;
+	margin-bottom: 2.25rem;
+	max-width: 100%;
+}
+
+/* Alinhamento centralizado explícito (.aligncenter) ou padrão do Gutenberg */
+.content .aligncenter,
+.entry-content .aligncenter,
+.content .wp-block-image.aligncenter,
+.entry-content .wp-block-image.aligncenter,
+.content figure.wp-block-image.aligncenter,
+.entry-content figure.wp-block-image.aligncenter,
+.content figure.aligncenter,
+.entry-content figure.aligncenter,
+.content .wp-block-image:not(.alignleft):not(.alignright),
+.entry-content .wp-block-image:not(.alignleft):not(.alignright) {
+	display: table !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
 	text-align: center;
+	clear: both;
+}
+
+.content .aligncenter img,
+.entry-content .aligncenter img,
+.content .aligncenter > a,
+.entry-content .aligncenter > a,
+.content .wp-block-image.aligncenter img,
+.entry-content .wp-block-image.aligncenter img,
+.content .wp-block-image:not(.alignleft):not(.alignright) img,
+.entry-content .wp-block-image:not(.alignleft):not(.alignright) img {
+	display: block !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+/* Alinhamento à esquerda */
+.content .alignleft,
+.entry-content .alignleft,
+.content .wp-block-image.alignleft,
+.entry-content .wp-block-image.alignleft,
+.content figure.alignleft,
+.entry-content figure.alignleft {
+	float: left;
+	margin-top: 0.5rem;
+	margin-right: 2rem;
+	margin-bottom: 1.5rem;
+	margin-left: 0;
+	display: table;
+}
+
+/* Alinhamento à direita */
+.content .alignright,
+.entry-content .alignright,
+.content .wp-block-image.alignright,
+.entry-content .wp-block-image.alignright,
+.content figure.alignright,
+.entry-content figure.alignright {
+	float: right;
+	margin-top: 0.5rem;
+	margin-left: 2rem;
+	margin-bottom: 1.5rem;
+	margin-right: 0;
+	display: table;
 }
 
 .content .wp-block-image img,
 .entry-content .wp-block-image img,
 .content figure.wp-block-image img,
-.entry-content figure.wp-block-image img {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+.entry-content figure.wp-block-image img,
+.content figure img,
+.entry-content figure img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 10px;

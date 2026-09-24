@@ -116,7 +116,7 @@ function membros_categoria_shortcode($atts)
             'taxonomy' => 'tipo_de_membro',
             'field' => 'slug',
             'terms' => $tipos[$atts['tipo']],
-            'include_children' => $atts['tipo'] === 'lideres',
+            'include_children' => in_array($atts['tipo'], array('atuais', 'lideres'), true),
         );
     }
 

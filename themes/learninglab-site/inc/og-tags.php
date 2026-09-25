@@ -10,10 +10,6 @@ function add_custom_og_tags() {
         echo '<meta property="og:url" content="https://learninglab.com.br/" />' . "\n";
         echo '<meta property="og:type" content="website" />' . "\n";
     }
-    echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
-    echo '<meta name="twitter:title" content="' . esc_attr(wp_strip_all_tags(get_the_title())) . '" />' . "\n";
-    echo '<meta name="twitter:description" content="' . esc_attr(wp_strip_all_tags(get_the_excerpt())) . '" />' . "\n";
-    echo '<meta name="twitter:image" content="' . esc_url(get_the_post_thumbnail_url()) . '" />' . "\n";
 }
 
 add_action('wp_head', 'add_custom_og_tags');

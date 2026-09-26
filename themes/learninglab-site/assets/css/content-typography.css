@@ -342,6 +342,14 @@
 	margin-bottom: 2.5rem;
 }
 
+/* ─── Grid de Membros (shortcode) ────────────────────────────────────────── */
+.content .membros-grid,
+.entry-content .membros-grid {
+	margin-top: 1.5rem;
+	margin-bottom: 2rem;
+}
+
+
 /* ─── Separadores (Linhas Divisórias) ───────────────────────────────────── */
 .content hr,
 .entry-content hr,

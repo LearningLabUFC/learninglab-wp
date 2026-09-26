@@ -14,14 +14,14 @@ function learninglab_membro_nome_duas_linhas() {
     $partes = explode(' ', trim($nome_completo));
 
     if (count($partes) <= 1) {
-        echo '<span class="membro-primeiro-nome">' . esc_html($nome_completo) . '</span><br><span class="membro-sobrenome">&nbsp;</span>';
+        echo '<span class="membro-primeiro-nome">' . esc_html($nome_completo) . '</span><span class="membro-sobrenome">&nbsp;</span>';
         return;
     }
 
     $sobrenome = array_pop($partes);
     $primeiro_nomes = implode(' ', $partes);
 
-    echo '<span class="membro-primeiro-nome">' . esc_html($primeiro_nomes) . '</span><br><span class="membro-sobrenome">' . esc_html($sobrenome) . '</span>';
+    echo '<span class="membro-primeiro-nome">' . esc_html($primeiro_nomes) . '</span><span class="membro-sobrenome">' . esc_html($sobrenome) . '</span>';
 }
 
 function learninglab_render_membro_socials($post_id) {

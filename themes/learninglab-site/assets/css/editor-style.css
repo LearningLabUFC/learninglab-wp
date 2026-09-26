@@ -219,3 +219,10 @@ p.block-editor-rich-text__editable {
 	margin: 3rem auto !important;
 	border-top: 1px solid #e0e0e0 !important;
 }
+
+/* Shortcode block */
+.editor-styles-wrapper .wp-block-shortcode {
+	margin-top: 1.5rem !important;
+	margin-bottom: 1.5rem !important;
+}
+

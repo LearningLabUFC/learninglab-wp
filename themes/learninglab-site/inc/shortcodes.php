@@ -85,23 +85,22 @@ function membros_categoria_shortcode($atts)
         array(
             'categoria' => '',
             'tipo' => 'atuais',
+            'coordenadora' => 'false',
         ),
         $atts,
         'membros_categoria'
     );
 
     $categoria = sanitize_title($atts['categoria']);
-    $tipos = array(
-        'atuais' => 'membro-atual',
-        'egressos' => 'egresso',
-        'lideres' => 'lider',
-    );
+    $slug_lider_categoria = 'lider-' . $categoria;
+    $incluir_coordenadora = filter_var($atts['coordenadora'], FILTER_VALIDATE_BOOLEAN);
+    $tipos_permitidos = array('atuais', 'lideres');
 
-    if ($categoria === '' || ($atts['tipo'] !== 'todos' && !isset($tipos[$atts['tipo']]))) {
+    if ($categoria === '' || ($atts['tipo'] !== 'todos' && !in_array($atts['tipo'], $tipos_permitidos, true))) {
         return '';
     }
 
-    $tax_query = array(
+    $tax_query_categoria = array(
         array(
             'taxonomy' => 'tipo_de_membro',
             'field' => 'slug',
@@ -110,24 +109,106 @@ function membros_categoria_shortcode($atts)
         ),
     );
 
-    if ($atts['tipo'] !== 'todos') {
-        $tax_query['relation'] = 'AND';
-        $tax_query[] = array(
+    $tax_query_atuais = array(
+        'relation' => 'AND',
+        $tax_query_categoria[0],
+        array(
             'taxonomy' => 'tipo_de_membro',
             'field' => 'slug',
-            'terms' => $tipos[$atts['tipo']],
-            'include_children' => in_array($atts['tipo'], array('atuais', 'lideres'), true),
-        );
-    }
+            'terms' => 'membro-atual',
+            'include_children' => true,
+        ),
+    );
 
-    $membros = get_posts(array(
+    // Compatível tanto com a associação por categoria + "lider" quanto com
+    // a convenção de termo "lider-{categoria}".
+    $tax_query_lideres_por_categoria = array(
+        'relation' => 'AND',
+        $tax_query_categoria[0],
+        array(
+            'taxonomy' => 'tipo_de_membro',
+            'field' => 'slug',
+            'terms' => 'lider',
+            'include_children' => true,
+        ),
+    );
+
+    $tax_query_lideres_por_slug = array(
+        array(
+            'taxonomy' => 'tipo_de_membro',
+            'field' => 'slug',
+            'terms' => $slug_lider_categoria,
+            'include_children' => false,
+        ),
+    );
+
+    $args_membros = array(
         'post_type' => 'membro',
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'orderby' => 'title',
         'order' => 'ASC',
-        'tax_query' => $tax_query,
+    );
+
+    $normalizar_membros = function ($membros) {
+        $membros_por_id = array();
+        foreach ($membros as $membro) {
+            $membros_por_id[$membro->ID] = $membro;
+        }
+        $membros_normalizados = array_values($membros_por_id);
+
+        usort($membros_normalizados, function ($primeiro_membro, $segundo_membro) {
+            return strnatcasecmp($primeiro_membro->post_title, $segundo_membro->post_title);
+        });
+
+        return $membros_normalizados;
+    };
+
+    $membros_atuais = get_posts(array_merge($args_membros, array('tax_query' => $tax_query_atuais)));
+    $membros_lideres = $normalizar_membros(array_merge(
+        get_posts(array_merge($args_membros, array('tax_query' => $tax_query_lideres_por_categoria))),
+        get_posts(array_merge($args_membros, array('tax_query' => $tax_query_lideres_por_slug)))
     ));
+
+    $ids_lideres = wp_list_pluck($membros_lideres, 'ID');
+    $membros_atuais = array_values(array_filter($membros_atuais, function ($membro) use ($ids_lideres) {
+        return !in_array($membro->ID, $ids_lideres, true);
+    }));
+
+    if ($atts['tipo'] === 'todos') {
+        $membros = $normalizar_membros(array_merge($membros_atuais, $membros_lideres));
+    } elseif ($atts['tipo'] === 'lideres') {
+        $membros = $membros_lideres;
+    } else {
+        $membros = $membros_atuais;
+    }
+
+    if ($incluir_coordenadora) {
+        $coordenadoras = get_posts(array(
+            'post_type' => 'membro',
+            'post_status' => 'publish',
+            'posts_per_page' => 1,
+            'orderby' => 'title',
+            'order' => 'ASC',
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'tipo_de_membro',
+                    'field' => 'slug',
+                    'terms' => 'coordenador',
+                ),
+            ),
+        ));
+
+        if ($coordenadoras) {
+            $coordenadora = $coordenadoras[0];
+
+            // A coordenadora sempre aparece primeiro e não é repetida no grid.
+            $membros = array_values(array_filter($membros, function ($membro) use ($coordenadora) {
+                return $membro->ID !== $coordenadora->ID;
+            }));
+            array_unshift($membros, $coordenadora);
+        }
+    }
 
     return $membros ? learninglab_render_membros_grid($membros) : '';
 }

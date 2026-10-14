@@ -33,17 +33,12 @@ get_header();
             
             if ($coord_query->have_posts()) :
                 while ($coord_query->have_posts()) : $coord_query->the_post(); ?>
-                    <div class="membro-item <?php echo is_membro_formado(get_the_ID()) ? 'formado' : ''; ?>">
-                        <i class="fa-solid fa-graduation-cap icon-formado"></i>
-                        <?php if (has_post_thumbnail()) : ?>
-                            <div class="membro-avatar"><?php the_post_thumbnail('thumbnail'); ?></div>
-                        <?php endif; ?>
-                        <h4 class="membro-nome"><?php learninglab_membro_nome_duas_linhas(); ?></h4>
-                        <?php learninglab_render_membro_socials(get_the_ID()); ?>
-                        <div class="membro-setores">
-                            <span class="setor-coordenadora">Coordenadora</span>
-                        </div>
-                    </div>
+                    <?php
+                    get_template_part('template-parts/content', 'membro', array(
+                        'show_socials' => true,
+                        'setor_html'   => '<div class="membro-setores"><span class="setor-coordenadora">Coordenadora</span></div>',
+                    ));
+                    ?>
                 <?php endwhile;
             endif;
             wp_reset_postdata();
@@ -69,18 +64,12 @@ get_header();
             
             if ($cofund_query->have_posts()) :
                 while ($cofund_query->have_posts()) : $cofund_query->the_post(); ?>
-                    <div class="membro-item <?php echo is_membro_formado(get_the_ID()) ? 'formado' : ''; ?>">
-                        <i class="fa-solid fa-graduation-cap icon-formado"></i>
-                        <?php if (has_post_thumbnail()) : ?>
-                            <div class="membro-avatar"><?php the_post_thumbnail('thumbnail'); ?></div>
-                        <?php endif; ?>
-                        <h4 class="membro-nome"><?php learninglab_membro_nome_duas_linhas(); ?></h4>
-                        <?php learninglab_render_membro_socials(get_the_ID()); ?>
-                        
-                        <div class="membro-setores">
-                            <span class="setor-cofundadora">Cofundadora</span>
-                        </div>
-                    </div>
+                    <?php
+                    get_template_part('template-parts/content', 'membro', array(
+                        'show_socials' => true,
+                        'setor_html'   => '<div class="membro-setores"><span class="setor-cofundadora">Cofundadora</span></div>',
+                    ));
+                    ?>
                 <?php endwhile;
             endif;
             wp_reset_postdata();
@@ -102,18 +91,12 @@ get_header();
             
             if ($admin_query->have_posts()) :
                 while ($admin_query->have_posts()) : $admin_query->the_post(); ?>
-                    <div class="membro-item <?php echo is_membro_formado(get_the_ID()) ? 'formado' : ''; ?>">
-                        <i class="fa-solid fa-graduation-cap icon-formado"></i>
-                        <?php if (has_post_thumbnail()) : ?>
-                            <div class="membro-avatar"><?php the_post_thumbnail('thumbnail'); ?></div>
-                        <?php endif; ?>
-                        <h4 class="membro-nome"><?php learninglab_membro_nome_duas_linhas(); ?></h4>
-                        <?php learninglab_render_membro_socials(get_the_ID()); ?>
-                        
-                        <div class="membro-setores">
-                            <span class="setor-administrativo">Administrativo</span>
-                        </div>
-                    </div>
+                    <?php
+                    get_template_part('template-parts/content', 'membro', array(
+                        'show_socials' => true,
+                        'setor_html'   => '<div class="membro-setores"><span class="setor-administrativo">Administrativo</span></div>',
+                    ));
+                    ?>
                 <?php endwhile;
             endif;
             wp_reset_postdata();
@@ -149,32 +132,30 @@ get_header();
         ?>
                 <div class="membros-grid">
                     <?php while ($lideres_query->have_posts()) : $lideres_query->the_post(); ?>
-                        <div class="membro-item <?php echo is_membro_formado(get_the_ID()) ? 'formado' : ''; ?>">
-                            <i class="fa-solid fa-graduation-cap icon-formado"></i>
-                            <?php if (has_post_thumbnail()) : ?>
-                                <div class="membro-avatar"><?php the_post_thumbnail('thumbnail'); ?></div>
-                            <?php endif; ?>
-                            <h4 class="membro-nome"><?php learninglab_membro_nome_duas_linhas(); ?></h4>
-                            <?php learninglab_render_membro_socials(get_the_ID()); ?>
-                            
-                            <?php
-                            $setores = get_the_terms(get_the_ID(), 'tipo_de_membro');
-                            if ($setores) :
-                            ?>
-                                <div class="membro-setores">
-                                    <?php foreach ($setores as $setor) : ?>
-                                        <?php
-                                        if (in_array($setor->term_id, $lider_subcategorias)) :
-                                            $rotulo = str_replace('Líder ', '', $setor->name);
-                                        ?>
-                                            <span class="setor-<?php echo esc_attr($setor->slug); ?>">
-                                                <?php echo esc_html($rotulo); ?>
-                                            </span>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                        <?php
+                        $setor_html = '';
+                        $setores = get_the_terms(get_the_ID(), 'tipo_de_membro');
+
+                        if ($setores && !is_wp_error($setores)) {
+                            $setor_html .= '<div class="membro-setores">';
+
+                            foreach ($setores as $setor) {
+                                if (in_array($setor->term_id, $lider_subcategorias)) {
+                                    $rotulo = str_replace('Líder ', '', $setor->name);
+                                    $setor_html .= '<span class="setor-' . esc_attr($setor->slug) . '">';
+                                    $setor_html .= esc_html($rotulo);
+                                    $setor_html .= '</span>';
+                                }
+                            }
+
+                            $setor_html .= '</div>';
+                        }
+
+                        get_template_part('template-parts/content', 'membro', array(
+                            'show_socials' => true,
+                            'setor_html'   => $setor_html,
+                        ));
+                        ?>
                     <?php endwhile; ?>
                 </div>
         <?php
@@ -210,36 +191,36 @@ get_header();
         ?>
             <div class="membros-grid">
                 <?php while ($atuais_query->have_posts()) : $atuais_query->the_post(); ?>
-                    <div class="membro-item <?php echo is_membro_formado(get_the_ID()) ? 'formado' : ''; ?>">
-                        <i class="fa-solid fa-graduation-cap icon-formado"></i>
-                        <?php if (has_post_thumbnail()) : ?>
-                            <div class="membro-avatar"><?php the_post_thumbnail('thumbnail'); ?></div>
-                        <?php endif; ?>
-                        <h4 class="membro-nome"><?php learninglab_membro_nome_duas_linhas(); ?></h4>
-                        <?php learninglab_render_membro_socials(get_the_ID()); ?>
-                        
-                        <?php
-                        $setores = get_the_terms(get_the_ID(), 'tipo_de_membro');
-                        if ($setores) :
-                        ?>
-                            <div class="membro-setores">
-                                <?php foreach ($setores as $setor) : ?>
-                                    <?php
-                                    $is_setor_de_membro = term_is_ancestor_of(
-                                        get_term_by('slug', 'membro-atual', 'tipo_de_membro')->term_id,
-                                        $setor->term_id,
-                                        'tipo_de_membro'
-                                    );
-                                    if ($is_setor_de_membro) :
-                                    ?>
-                                        <span class="setor-<?php echo esc_attr($setor->slug); ?>">
-                                            <?php echo esc_html($setor->name); ?>
-                                        </span>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
+                    <?php
+                    $setor_html = '';
+                    $setores = get_the_terms(get_the_ID(), 'tipo_de_membro');
+                    $categoria_membro = get_term_by('slug', 'membro-atual', 'tipo_de_membro');
+
+                    if ($setores && !is_wp_error($setores) && $categoria_membro) {
+                        $setor_html .= '<div class="membro-setores">';
+
+                        foreach ($setores as $setor) {
+                            $is_setor_de_membro = term_is_ancestor_of(
+                                $categoria_membro->term_id,
+                                $setor->term_id,
+                                'tipo_de_membro'
+                            );
+
+                            if ($is_setor_de_membro) {
+                                $setor_html .= '<span class="setor-' . esc_attr($setor->slug) . '">';
+                                $setor_html .= esc_html($setor->name);
+                                $setor_html .= '</span>';
+                            }
+                        }
+
+                        $setor_html .= '</div>';
+                    }
+
+                    get_template_part('template-parts/content', 'membro', array(
+                        'show_socials' => true,
+                        'setor_html'   => $setor_html,
+                    ));
+                    ?>
                 <?php endwhile; ?>
             </div>
         <?php
@@ -269,13 +250,11 @@ get_header();
         ?>
             <div class="membros-grid">
                 <?php while ($egressos_query->have_posts()) : $egressos_query->the_post(); ?>
-                    <div class="membro-item <?php echo is_membro_formado(get_the_ID()) ? 'formado' : ''; ?>">
-                        <i class="fa-solid fa-graduation-cap icon-formado"></i>
-                        <?php if (has_post_thumbnail()) : ?>
-                            <div class="membro-avatar"><?php the_post_thumbnail('thumbnail'); ?></div>
-                        <?php endif; ?>
-                        <h4 class="membro-nome"><?php learninglab_membro_nome_duas_linhas(); ?></h4>
-                    </div>
+                    <?php
+                    get_template_part('template-parts/content', 'membro', array(
+                        'show_socials' => false,
+                    ));
+                    ?>
                 <?php endwhile; ?>
             </div>
         <?php

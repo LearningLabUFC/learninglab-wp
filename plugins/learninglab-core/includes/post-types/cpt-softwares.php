@@ -34,7 +34,7 @@ function registrar_cpt_softwares() {
         'hierarchical'       => false,
         'menu_position'      => 6,
         'menu_icon'          => 'dashicons-laptop',
-        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields' ),
         'show_in_rest'       => true,
     );
 

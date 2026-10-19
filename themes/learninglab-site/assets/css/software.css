@@ -1,167 +1,280 @@
-.software-single-main .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-left: 20px;
-    padding-right: 20px;
+/* ─────────────────────────────────────────────────────────────
+   Página de listagem e individual de Softwares (page-softwares.php e single-software.php)
+   Layout inspirado em Cursos: faixa roxa centralizada, sidebar sticky
+   com logo, badges, botões de ação e tecnologias.
+   ───────────────────────────────────────────────────────────── */
+
+/* ─── Faixa Roxa Superior (Single) ────────────────────────── */
+.container-header.software-single-header .title {
+    text-align: center;
+    margin: auto;
 }
 
-.software-header {
+.container-header.software-single-header h1 {
+    text-align: center;
+}
+
+/* ─── Layout da Página Individual ─────────────────────────── */
+.software-layout {
     display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 1rem 4rem 1rem;
+    box-sizing: border-box;
+}
+
+.software-main {
+    min-width: 0;
+    width: 100%;
+}
+
+/* ─── Sidebar (Card de Informações do Software) ───────────── */
+.software-info-card {
+    background: var(--ll-surface);
+    border-radius: 12px;
+    border-top: 4px solid var(--ll-accent);
+    box-shadow: var(--ll-shadow-2);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* Logo do Software */
+.software-logo {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 24px;
-    padding: 24px 0;
+    background: var(--ll-surface-subtle);
+    border: 1px solid var(--ll-border);
+    border-radius: 10px;
+    padding: 14px;
 }
 
 .software-logo img {
-    width: 120px;
-    height: 120px;
+    max-width: 100%;
+    height: auto;
+    max-height: 140px;
     object-fit: contain;
-    border-radius: 8px;
-    background: #fff;
-    padding: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: block;
+    border-radius: 6px;
+    margin: 0;
 }
 
-.software-header-info h1 {
-    margin: 0 0 10px 0;
-}
-
-.software-header-meta {
+/* Badges de Versão / Desenvolvimento / Tipos */
+.software-meta-badges {
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 16px;
-}
-
-/* Badges de Tipo */
-.software-tipos {
-    display: flex;
     gap: 8px;
-    flex-wrap: wrap;
+    align-items: center;
 }
 
-.tipo-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    background-color: #e5e7eb;
-    color: #374151;
-}
-
-.tipo-badge.tipo-web-app    { background-color: #e0f2fe; color: #0369a1; }
-.tipo-badge.tipo-ferramenta { background-color: #fef3c7; color: #92400e; }
-.tipo-badge.tipo-biblioteca { background-color: #f3e8ff; color: #6b21a8; }
-.tipo-badge.tipo-mobile     { background-color: #dcfce7; color: #166534; }
-.tipo-badge.tipo-api        { background-color: #fee2e2; color: #991b1b; }
-
-/* Versão / Em desenvolvimento */
-.software-versao {
-    display: inline-block;
-    background: #23282d;
-    color: #fff;
-    font-family: monospace;
-    font-size: 0.85rem;
-    padding: 3px 8px;
-    border-radius: 4px;
-}
-
-.software-versao.software-em-dev {
-    background: #d97706;
-    color: #fff;
-    font-weight: 600;
-}
-
-/* Botões */
-.software-links {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.btn-software {
+.software-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 0.9rem;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
     font-weight: 600;
-    transition: opacity 0.2s ease;
+    line-height: 1.2;
 }
 
-.btn-software:hover {
-    opacity: 0.85;
+.software-badge-dev {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
 }
 
-.btn-repo {
-    background: #24292e;
-    color: #fff;
+.software-badge-versao {
+    background: var(--ll-surface-subtle);
+    color: var(--ll-text-strong);
+    border: 1px solid var(--ll-border);
+    font-family: monospace;
+    font-size: 0.85rem;
 }
 
-.btn-demo {
-    background: #0073aa;
-    color: #fff;
+/* Badges de Tipo de Software */
+.tipo-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background-color: var(--ll-surface-subtle);
+    color: var(--ll-text);
+    border: 1px solid var(--ll-border);
 }
 
-/* Conteúdo */
-.software-body {
-    padding-top: 32px;
-    padding-bottom: 48px;
+.tipo-badge.tipo-web-app    { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+.tipo-badge.tipo-ferramenta { background-color: #fef3c7; color: #92400e; border-color: #fde68a; }
+.tipo-badge.tipo-biblioteca { background-color: #f3e8ff; color: #6b21a8; border-color: #e9d5ff; }
+.tipo-badge.tipo-mobile     { background-color: #dcfce7; color: #166534; border-color: #bbf7d0; }
+.tipo-badge.tipo-api        { background-color: #fee2e2; color: #991b1b; border-color: #fecaca; }
+
+/* Botões de Ação (Acessar / Repositório) */
+.software-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
-.software-tecnologias,
-.software-membros {
-    margin-top: 36px;
-    border-top: 1px solid #e5e7eb;
-    padding-top: 24px;
+.btn-software {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.85rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: var(--ll-shadow-1);
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    box-sizing: border-box;
 }
 
-.software-tecnologias h3 {
-    margin-bottom: 12px;
-    font-size: 1.2rem;
+.btn-software.btn-demo {
+    background: var(--ll-accent);
+    color: var(--ll-on-accent);
 }
 
-/* Tags de Tecnologias */
+.btn-software.btn-demo:hover,
+.btn-software.btn-demo:focus-visible {
+    background: var(--ll-accent-hover);
+    color: var(--ll-on-accent);
+    transform: translateY(-2px);
+    box-shadow: var(--ll-shadow-2);
+}
+
+.btn-software.btn-repo {
+    background: #1f2328;
+    color: #ffffff;
+}
+
+.btn-software.btn-repo:hover,
+.btn-software.btn-repo:focus-visible {
+    background: #000000;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: var(--ll-shadow-2);
+}
+
+/* Tecnologias na Sidebar */
+.software-sidebar-secao {
+    border-top: 1px solid var(--ll-border-subtle);
+    padding-top: 1rem;
+}
+
+.software-sidebar-titulo {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--ll-text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.75rem 0;
+    padding: 0;
+}
+
 .tech-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
 .tech-list li {
-    background: #f3f4f6;
-    color: #374151;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    border: 1px solid #e5e7eb;
-}
-
-.membro-cargo {
-    display: block;
+    background: var(--ll-surface-subtle);
+    color: var(--ll-text);
+    border: 1px solid var(--ll-border);
+    padding: 4px 10px;
+    border-radius: 999px;
     font-size: 0.8rem;
-    color: #6b7280;
-    margin-top: 4px;
+    font-weight: 500;
 }
 
-/* Responsividade */
-@media (max-width: 600px) {
-    .software-header {
-        flex-direction: column;
+/* ─── Seção de Membros Envolvidos ─────────────────────────── */
+.software-main .software-secao {
+    margin-top: 3rem;
+}
+
+.software-main .software-secao h3.software-secao-titulo {
+    margin: 0 0 1.25rem 0;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--ll-border-subtle);
+    font-size: 1.4rem;
+}
+
+.software-main .software-membros .membros-grid {
+    justify-content: flex-start;
+    gap: 20px;
+    margin: 0;
+}
+
+/* Pílula de Cargo dos Membros (similar aos setores do CPT Membros) */
+.software-membros .membro-setores span.membro-cargo {
+    background-color: var(--ll-surface-subtle);
+    color: var(--ll-text-muted);
+    border: 1px solid var(--ll-border);
+    text-transform: capitalize;
+    font-size: 0.72rem;
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+/* Na página de softwares, não destacar se é formado ou não */
+.software-membros .icon-formado {
+    display: none !important;
+}
+
+.software-membros .membro-item.formado .membro-avatar img {
+    border: none !important;
+}
+
+/* ─── Responsividade (Desktop vs Mobile) ──────────────────── */
+@media (min-width: 900px) {
+    .software-layout.tem-sidebar {
+        flex-direction: row;
         align-items: flex-start;
-        gap: 16px;
+        gap: 2.5rem;
     }
 
-    .software-links {
-        flex-wrap: wrap;
+    .software-layout.tem-sidebar .software-main {
+        flex: 1 1 auto;
+        order: 1;
+    }
+
+    .software-layout.tem-sidebar .software-sidebar {
+        flex: 0 0 320px;
+        order: 2;
+        position: sticky;
+        top: 2rem;
+    }
+}
+
+@media (max-width: 899px) {
+    .software-layout .software-sidebar {
+        order: 1;
+        width: 100%;
+    }
+
+    .software-layout .software-main {
+        order: 2;
+        width: 100%;
+    }
+
+    .software-main .software-membros .membros-grid {
+        justify-content: center;
     }
 }

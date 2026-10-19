@@ -90,32 +90,45 @@
         <?php
         // Membros envolvidos
         $membros = get_post_meta( get_the_ID(), '_software_membros', true );
-        if ( ! empty( $membros ) && is_array( $membros ) ) : ?>
+        if ( ! empty( $membros ) && is_array( $membros ) ) :
+            $cargos_por_id = array();
+            foreach ( $membros as $membro_data ) {
+                if ( ! empty( $membro_data['id'] ) ) {
+                    $cargos_por_id[ (int) $membro_data['id'] ] = $membro_data['cargo'] ?? '';
+                }
+            }
+            $membros_ids = array_keys( $cargos_por_id );
+
+            $membros_query = new WP_Query( array(
+                'post_type'      => 'membro',
+                'post_status'    => 'publish',
+                'post__in'       => ! empty( $membros_ids ) ? $membros_ids : array( 0 ),
+                'orderby'        => 'post__in',
+                'posts_per_page' => -1,
+                'no_found_rows'  => true,
+            ) );
+
+            if ( $membros_query->have_posts() ) :
+        ?>
             <div class="software-membros">
                 <h3>Membros envolvidos</h3>
                 <div class="membros-grid">
-                    <?php foreach ( $membros as $membro_data ) :
-                        $membro_id = isset( $membro_data['id'] ) ? (int) $membro_data['id'] : 0;
-                        $cargo     = isset( $membro_data['cargo'] ) ? $membro_data['cargo'] : '';
-                        $nome      = get_the_title( $membro_id );
-                        $foto_url  = get_the_post_thumbnail_url( $membro_id, 'thumbnail' );
-                        if ( ! $membro_id || ! $nome ) continue;
-                    ?>
-                        <div class="membro-item">
-                            <?php if ( $foto_url ) : ?>
-                                <div class="membro-avatar">
-                                    <img src="<?php echo esc_url( $foto_url ); ?>" alt="<?php echo esc_attr( $nome ); ?>">
-                                </div>
-                            <?php endif; ?>
-                            <h4 class="membro-nome"><?php echo esc_html( $nome ); ?></h4>
-                            <?php if ( $cargo ) : ?>
-                                <span class="membro-cargo"><?php echo esc_html( $cargo ); ?></span>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
+                    <?php while ( $membros_query->have_posts() ) : $membros_query->the_post();
+                        $cargo = $cargos_por_id[ get_the_ID() ] ?? '';
+                        $setor_html = $cargo ? '<span class="membro-cargo">' . esc_html( $cargo ) . '</span>' : '';
+
+                        get_template_part( 'template-parts/content', 'membro', array(
+                            'show_socials' => false,
+                            'setor_html'   => $setor_html,
+                        ) );
+                    endwhile; ?>
                 </div>
             </div>
-        <?php endif; ?>
+            <?php
+            endif;
+            wp_reset_postdata();
+        endif;
+        ?>
 
     </div>
 

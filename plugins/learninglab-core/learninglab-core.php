@@ -30,6 +30,7 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/taxonomies/tax-tipo-softwar
 // Meta Boxes
 require_once plugin_dir_path( __FILE__ ) . 'includes/meta-boxes/mb-membro.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/meta-boxes/mb-artigo.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/meta-boxes/mb-curso.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/meta-boxes/mb-software.php';
 
 // Blocos Gutenberg

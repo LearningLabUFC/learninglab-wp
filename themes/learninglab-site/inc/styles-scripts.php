@@ -37,8 +37,12 @@ function learninglab_register_styles()
         wp_enqueue_style('learninglab_404_style', get_template_directory_uri() . "/assets/css/404.css", array(), $version, 'all');
     }
 
-    if (is_page() || is_singular('curso') || is_singular('subprojetos')) {
+    if (is_page() || is_singular('curso') || is_singular('subprojetos') || is_singular('software')) {
         wp_enqueue_style('learninglab_curso_style', get_template_directory_uri() . "/assets/css/page.css", array(), $version, 'all');
+    }
+
+    if (is_singular('curso')) {
+        wp_enqueue_style('learninglab_single_curso_style', get_template_directory_uri() . "/assets/css/curso.css", array('learninglab_curso_style', 'learninglab_membro_style'), $version, 'all');
     }
 
     if (is_page('contato')) {
@@ -53,7 +57,7 @@ function learninglab_register_styles()
         wp_enqueue_style('swiper-noticias-style', get_template_directory_uri() . "/assets/css/swiper-styles-noticias.css", array('swiper-css'), $version, 'all');
     }
 
-    if (is_singular('post') || is_page() || is_singular('subprojetos') || is_singular('software')) {
+    if (is_singular('post') || is_page() || is_singular('subprojetos') || is_singular('curso') || is_singular('software')) {
         wp_enqueue_style('learninglab_membro_style', get_template_directory_uri() . "/assets/css/membro.css", array(), $version, 'all');
     }
 
@@ -63,7 +67,7 @@ function learninglab_register_styles()
 
     // CSS específico da página individual de software
     if (is_singular('software')) {
-        wp_enqueue_style('learninglab_software_style', get_template_directory_uri() . "/assets/css/software.css", array(), $version, 'all');
+        wp_enqueue_style('learninglab_software_style', get_template_directory_uri() . "/assets/css/software.css", array('learninglab_curso_style', 'learninglab_membro_style'), $version, 'all');
     }
 }
 

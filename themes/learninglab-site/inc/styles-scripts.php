@@ -45,6 +45,10 @@ function learninglab_register_styles()
         wp_enqueue_style('learninglab_curso_style', get_template_directory_uri() . "/assets/css/page.css", array(), $version, 'all');
     }
 
+    if (is_singular('curso')) {
+        wp_enqueue_style('learninglab_single_curso_style', get_template_directory_uri() . "/assets/css/curso.css", array('learninglab_curso_style', 'learninglab_membro_style'), $version, 'all');
+    }
+
     if (is_page('contato')) {
         wp_enqueue_style('learninglab_contato_style', get_template_directory_uri() . "/assets/css/contato.css", array(), $version, 'all');
     }
@@ -60,7 +64,7 @@ wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bu
         wp_enqueue_style('swiper-noticias-style', get_template_directory_uri() . "/assets/css/swiper-styles-noticias.css", array('swiper-css'), $version, 'all');
     }
 
-    if (is_singular('post') || is_page() || is_singular('subprojetos')) {
+    if (is_singular('post') || is_page() || is_singular('subprojetos') || is_singular('curso')) {
         wp_enqueue_style('learninglab_membro_style', get_template_directory_uri() . "/assets/css/membro.css", array(), $version, 'all');
     }
 

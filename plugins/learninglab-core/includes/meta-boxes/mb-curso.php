@@ -167,6 +167,9 @@ function render_meta_box_curso( $post ) {
                 placeholder="https://exemplo.com/inscricao"
                 style="width: 100%;"
             >
+            <span class="description" style="display:block;margin-top:4px;">
+                Exibido na página do curso somente quando ele estiver com o status "Inscrições abertas".
+            </span>
         </p>
 
         <p>

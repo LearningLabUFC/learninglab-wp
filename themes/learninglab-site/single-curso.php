@@ -35,7 +35,28 @@
             </div>
 
             <?php
-            $tem_info = $carga_horaria || $data_inicio || $link_inscricao;
+            // Status de inscrição, definido pela taxonomia "status_curso":
+            //  - inscricoes-abertas    => botão de inscrição (se houver link)
+            //  - inscricoes-encerradas => aviso "Inscrições encerradas"
+            //  - curso-em-andamento    => aviso "Em andamento"
+            //  - demais (passado etc.) => nada
+            $status_slugs = wp_get_post_terms($curso_id, 'status_curso', array('fields' => 'slugs'));
+            if (is_wp_error($status_slugs)) {
+                $status_slugs = array();
+            }
+
+            $mostrar_botao = in_array('inscricoes-abertas', $status_slugs, true) && $link_inscricao;
+            $status_aviso  = '';
+
+            if (in_array('inscricoes-abertas', $status_slugs, true)) {
+                $status_aviso = '';
+            } elseif (in_array('inscricoes-encerradas', $status_slugs, true)) {
+                $status_aviso = 'encerradas';
+            } elseif (in_array('curso-em-andamento', $status_slugs, true)) {
+                $status_aviso = 'andamento';
+            }
+
+            $tem_info = $carga_horaria || $data_inicio || $mostrar_botao || $status_aviso;
             ?>
 
             <div class="curso-layout<?php echo $tem_info ? ' tem-sidebar' : ''; ?>">
@@ -67,7 +88,7 @@
                                 <?php endif; ?>
                             </ul>
 
-                            <?php if ($link_inscricao) : ?>
+                            <?php if ($mostrar_botao) : ?>
                                 <a
                                     href="<?php echo esc_url($link_inscricao); ?>"
                                     target="_blank"
@@ -77,6 +98,16 @@
                                     Fazer inscrição
                                     <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
                                 </a>
+                            <?php elseif ($status_aviso === 'encerradas') : ?>
+                                <span class="curso-status-inscricao encerradas">
+                                    <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                                    Inscrições encerradas
+                                </span>
+                            <?php elseif ($status_aviso === 'andamento') : ?>
+                                <span class="curso-status-inscricao andamento">
+                                    <i class="fa-solid fa-play" aria-hidden="true"></i>
+                                    Em andamento
+                                </span>
                             <?php endif; ?>
                         </div>
                     </aside>

@@ -135,37 +135,31 @@
                         <section class="curso-secao curso-monitores">
                             <h3 class="curso-secao-titulo">Monitores</h3>
 
-                            <div class="membros-grid">
-                                <?php foreach ($monitores as $membro_id) :
-                                    $membro_id = (int) $membro_id;
+                            <?php
+                            $monitores_ids = array_values(array_filter(array_map('intval', $monitores)));
 
-                                    if (!$membro_id) {
-                                        continue;
-                                    }
+                            $monitores_query = new WP_Query(array(
+                                'post_type'      => 'membro',
+                                'post_status'    => 'publish',
+                                'post__in'       => $monitores_ids ? $monitores_ids : array(0),
+                                'orderby'        => 'post__in',
+                                'posts_per_page' => -1,
+                                'no_found_rows'  => true,
+                            ));
+                            ?>
 
-                                    $nome = get_the_title($membro_id);
-
-                                    if (!$nome) {
-                                        continue;
-                                    }
-
-                                    $foto_img = get_the_post_thumbnail(
-                                        $membro_id,
-                                        'thumbnail',
-                                        array(
-                                            'class' => 'attachment-thumbnail size-thumbnail wp-post-image',
-                                        )
-                                    );
-                                ?>
-                                    <div class="membro-item">
-                                        <?php if ($foto_img) : ?>
-                                            <div class="membro-avatar"><?php echo $foto_img; ?></div>
-                                        <?php endif; ?>
-
-                                        <h4 class="membro-nome"><?php echo esc_html($nome); ?></h4>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
+                            <?php if ($monitores_query->have_posts()) : ?>
+                                <div class="membros-grid">
+                                    <?php while ($monitores_query->have_posts()) : $monitores_query->the_post(); ?>
+                                        <?php
+                                        get_template_part('template-parts/content', 'membro', array(
+                                            'show_socials' => false,
+                                        ));
+                                        ?>
+                                    <?php endwhile; ?>
+                                </div>
+                            <?php endif; ?>
+                            <?php wp_reset_postdata(); ?>
                         </section>
                     <?php endif; ?>
 

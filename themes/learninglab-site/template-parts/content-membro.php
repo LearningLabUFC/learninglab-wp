@@ -1,4 +1,3 @@
-
 <?php
 $show_socials = $args['show_socials'] ?? true;
 $setor_html   = $args['setor_html'] ?? '';
@@ -15,5 +14,5 @@ $setor_html   = $args['setor_html'] ?? '';
 
     <?php if ($show_socials) learninglab_render_membro_socials(get_the_ID()); ?>
 
-    <?php if ($setor_html) echo $setor_html; ?>
+    <?php if ($setor_html) echo wp_kses_post($setor_html); ?>
 </div>

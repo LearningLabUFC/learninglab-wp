@@ -137,18 +137,22 @@ get_header();
                         $setores = get_the_terms(get_the_ID(), 'tipo_de_membro');
 
                         if ($setores && !is_wp_error($setores)) {
-                            $setor_html .= '<div class="membro-setores">';
+                            $spans = '';
 
                             foreach ($setores as $setor) {
                                 if (in_array($setor->term_id, $lider_subcategorias)) {
                                     $rotulo = str_replace('Líder ', '', $setor->name);
-                                    $setor_html .= '<span class="setor-' . esc_attr($setor->slug) . '">';
-                                    $setor_html .= esc_html($rotulo);
-                                    $setor_html .= '</span>';
+                                    $spans .= '<span class="setor-' . esc_attr($setor->slug) . '">';
+                                    $spans .= esc_html($rotulo);
+                                    $spans .= '</span>';
                                 }
                             }
 
-                            $setor_html .= '</div>';
+                            if ($spans) {
+
+                                $setor_html = '<div class="membro-setores">' . $spans . '</div>';
+
+                            }
                         }
 
                         get_template_part('template-parts/content', 'membro', array(
@@ -197,7 +201,7 @@ get_header();
                     $categoria_membro = get_term_by('slug', 'membro-atual', 'tipo_de_membro');
 
                     if ($setores && !is_wp_error($setores) && $categoria_membro) {
-                        $setor_html .= '<div class="membro-setores">';
+                        $spans = '';
 
                         foreach ($setores as $setor) {
                             $is_setor_de_membro = term_is_ancestor_of(
@@ -207,13 +211,17 @@ get_header();
                             );
 
                             if ($is_setor_de_membro) {
-                                $setor_html .= '<span class="setor-' . esc_attr($setor->slug) . '">';
-                                $setor_html .= esc_html($setor->name);
-                                $setor_html .= '</span>';
+                                $spans .= '<span class="setor-' . esc_attr($setor->slug) . '">';
+                                $spans .= esc_html($setor->name);
+                                $spans .= '</span>';
                             }
                         }
 
-                        $setor_html .= '</div>';
+                        if ($spans) {
+
+                            $setor_html = '<div class="membro-setores">' . $spans . '</div>';
+
+                        }
                     }
 
                     get_template_part('template-parts/content', 'membro', array(

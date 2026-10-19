@@ -18,17 +18,20 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/post-types/cpt-cursos.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/post-types/cpt-artigos.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/post-types/cpt-avaliacoes.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/post-types/cpt-subprojetos.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/post-types/cpt-softwares.php';
 
 // Taxonomias
 require_once plugin_dir_path( __FILE__ ) . 'includes/taxonomies/tax-tipo-membro.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/taxonomies/tax-status-curso.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/taxonomies/tax-evento-artigo.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/taxonomies/tax-ano-artigo.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/taxonomies/tax-tipo-software.php';
 
 // Meta Boxes
 require_once plugin_dir_path( __FILE__ ) . 'includes/meta-boxes/mb-membro.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/meta-boxes/mb-artigo.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/meta-boxes/mb-curso.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/meta-boxes/mb-software.php';
 
 // Blocos Gutenberg
 function learninglab_register_blocks() {

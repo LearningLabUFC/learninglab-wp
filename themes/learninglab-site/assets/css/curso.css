@@ -109,6 +109,32 @@
     box-shadow: var(--ll-shadow-2);
 }
 
+/* Avisos de status no lugar do botão de inscrição */
+.curso-info-card .curso-status-inscricao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.9rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: default;
+}
+
+.curso-info-card .curso-status-inscricao.encerradas {
+    background: var(--ll-surface-subtle);
+    color: var(--ll-text-subtle);
+    border: 1px solid var(--ll-border);
+}
+
+.curso-info-card .curso-status-inscricao.andamento {
+    background: color-mix(in srgb, var(--ll-accent) 12%, transparent);
+    color: var(--ll-accent);
+    border: 1px solid color-mix(in srgb, var(--ll-accent) 30%, transparent);
+}
+
 /* ─── Seções (instrutores / monitores) ────────────────────── */
 .curso-main .curso-secao {
     margin-top: 3rem;

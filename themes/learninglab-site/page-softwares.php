@@ -10,8 +10,6 @@
 
 <div class="container page-softwares">
 
-    <p>Conheça os softwares e ferramentas desenvolvidos pelo LearningLab.</p>
-
     <div class="cards-grid">
         <?php
         $args = array(

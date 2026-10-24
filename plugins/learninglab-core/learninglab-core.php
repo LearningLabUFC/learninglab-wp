@@ -12,6 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+define( 'LEARNINGLAB_CORE_VERSION', '1.1.0' );
+
 // Custom Post Types
 require_once plugin_dir_path( __FILE__ ) . 'includes/post-types/cpt-membros.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/post-types/cpt-cursos.php';

@@ -57,19 +57,19 @@
 
 
             <?php
-            
+
             $cursos_args = array(
                 'post_type' => 'curso',
-                'posts_per_page' => 2, 
-                'orderby' => 'date', 
-                'order' => 'DESC', 
+                'posts_per_page' => 2,
+                'orderby' => 'date',
+                'order' => 'DESC',
             );
 
             $cursos_query = new WP_Query($cursos_args);
 
             if ($cursos_query->have_posts()) :
                 while ($cursos_query->have_posts()) : $cursos_query->the_post();
-                    
+
                     $terms = get_the_terms(get_the_ID(), 'status_curso');
                     $inscricoes_abertas = false;
 
@@ -85,17 +85,17 @@
 
                     <div class="painel-curso">
                         <a href="<?php the_permalink(); ?>" class="link-curso">
-                            
+
                             <img src="<?php the_post_thumbnail_url('medium'); ?>" alt="<?php the_title(); ?>">
                             <div class="painel-descricao">
-                                
+
                                 <h3><?php the_title(); ?></h3>
                                 <div class="painel-texto"><?php the_excerpt(); ?></div>
 
-                                
+
                                 <div class="status">
                                     <?php
-                                    
+
                                     $terms = get_the_terms(get_the_ID(), 'status_curso');
                                     $curso_passado = false;
 
@@ -108,11 +108,11 @@
                                         }
                                     }
 
-                                    
+
                                     if ($curso_passado) {
                                         echo '';
                                     } else {
-                                        
+
                                         if ($inscricoes_abertas) {
                                             echo '<span class="inscricoes-abertas">inscrições abertas</span>';
                                         } else {
@@ -133,6 +133,49 @@
         </div>
     </section>
 
+    <!-- TASK 3: seção de subprojetos na Home -->
+    <?php
+    $subprojetos_query = new WP_Query(array(
+        'post_type'      => 'subprojetos',
+        'post_status'    => 'publish',
+        'posts_per_page' => 12,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    ));
+    ?>
+    <section class="home-subprojetos" aria-labelledby="subprojetos-titulo">
+        <div class="home-subprojetos-container">
+            <div class="home-subprojetos-header">
+                <h2 id="subprojetos-titulo">Nossos Subprojetos</h2>
+                <a class="subprojetos-ver-todos" href="<?php echo esc_url(home_url('/subprojetos/')); ?>">
+                    Ver todos os projetos
+                </a>
+            </div>
+
+            <?php if ($subprojetos_query->have_posts()) : ?>
+                <div class="swiper subprojetos-swiper">
+                    <div class="swiper-wrapper">
+                        <?php while ($subprojetos_query->have_posts()) : $subprojetos_query->the_post(); ?>
+                            <div class="swiper-slide">
+                                <?php get_template_part('template-parts/content', 'card'); ?>
+                            </div>
+                        <?php endwhile; ?>
+                    </div>
+                </div>
+
+                <div class="subprojetos-controles">
+                    <button type="button" class="subprojetos-prev" aria-label="Subprojeto anterior">&larr;</button>
+                    <div class="subprojetos-pagination"></div>
+                    <button type="button" class="subprojetos-next" aria-label="Próximo subprojeto">&rarr;</button>
+                </div>
+            <?php else : ?>
+                <p>Ainda não há subprojetos publicados.</p>
+            <?php endif; ?>
+        </div>
+    </section>
+    <?php wp_reset_postdata(); ?>
+    <!-- Fim da seção de subprojetos -->
+
     <section class="container-leitura">
 
         <div class="mais-noticias">
@@ -148,10 +191,10 @@
         <div class="swiper leitura-swiper">
             <div class="swiper-wrapper">
                 <?php
-                
+
                 $args = array(
                     'post_type' => 'post',
-                    'posts_per_page' => 6, 
+                    'posts_per_page' => 6,
                 );
                 $query = new WP_Query($args);
 
@@ -180,7 +223,7 @@
 
             </div>
 
-            
+
             <div class="swiper-button-next swiper-navBtn"></div>
             <div class="swiper-button-prev swiper-navBtn"></div>
             <div class="swiper-pagination"></div>
@@ -193,10 +236,10 @@
         <div class="swiper avaliacao-swiper">
             <div class="swiper-wrapper">
                 <?php
-                
+
                 $args = array(
-                    'post_type' => 'avaliacoes', 
-                    'posts_per_page' => -1 
+                    'post_type' => 'avaliacoes',
+                    'posts_per_page' => -1
                 );
 
                 $query = new WP_Query($args);
@@ -207,12 +250,12 @@
                         <div class="swiper-slide">
                             <div class="card-avaliacao">
                                 <div class="imagem-avaliacao">
-                                    <?php the_post_thumbnail('thumbnail'); 
+                                    <?php the_post_thumbnail('thumbnail');
                                     ?>
                                 </div>
                                 <div class="conteudo-avaliacao">
-                                    <h3><?php the_title(); ?></h3> 
-                                    <p><?php the_content(); ?></p> 
+                                    <h3><?php the_title(); ?></h3>
+                                    <p><?php the_content(); ?></p>
                                 </div>
                             </div>
                         </div>
@@ -224,10 +267,10 @@
                 endif;
                 ?>
             </div>
-            
+
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
-            
+
             <div class="swiper-pagination"></div>
         </div>
 

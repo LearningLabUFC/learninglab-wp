@@ -24,7 +24,7 @@ function learninglab_register_styles()
     }
 
     // CSS unificado dos cards (blog, cursos, subprojetos e softwares)
-    if (is_home() || is_page('nossos-cursos') || is_page('subprojetos') || is_page('softwares')) {
+    if (is_front_page() || is_home() || is_page('nossos-cursos') || is_page('subprojetos') || is_page('softwares')) {
         wp_enqueue_style('learninglab_cards_style', get_template_directory_uri() . "/assets/css/cards.css", array(), $version, 'all');
     }
 
@@ -52,7 +52,7 @@ function learninglab_register_styles()
     if (is_front_page()) {
         wp_enqueue_style('learninglab_frontpage_style', get_template_directory_uri() . "/assets/css/front-page.css", array(), $version, 'all');
 
-        wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css', array(), '10.0', 'all');        
+        wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css', array(), '10.0', 'all');
         wp_enqueue_style('swiper-avaliacoes-style', get_template_directory_uri() . "/assets/css/swiper-styles-avaliacoes.css", array('swiper-css'), $version, 'all');
         wp_enqueue_style('swiper-noticias-style', get_template_directory_uri() . "/assets/css/swiper-styles-noticias.css", array('swiper-css'), $version, 'all');
     }
@@ -78,13 +78,17 @@ add_action('wp_enqueue_scripts', 'learninglab_register_styles');
 function learninglab_register_scripts()
 {
     $version = wp_get_theme()->get('Version');
-    
+
     wp_enqueue_script('swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js', array(), '10.0', true);
-    
+
     wp_enqueue_script('swiper-init-avaliacoes', get_template_directory_uri() . "/assets/js/swiper-init-avaliacoes.js", array('swiper-js'), $version, true);
-    
+
     wp_enqueue_script('swiper-init-noticias', get_template_directory_uri() . "/assets/js/swiper-init-noticias.js", array('swiper-js'), $version, true);
-    
+
+    if (is_front_page()) {
+        wp_enqueue_script('swiper-init-subprojetos', get_template_directory_uri() . "/assets/js/swiper-init-subprojetos.js", array('swiper-js'), $version, true);
+    }
+
     wp_enqueue_script('learninglab_main_script', get_template_directory_uri() . "/assets/js/main.js", array(), $version, true);
 }
 

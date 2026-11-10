@@ -145,10 +145,10 @@
     ?>
     <section class="home-subprojetos" aria-labelledby="subprojetos-titulo">
         <div class="home-subprojetos-container">
-            <div class="home-subprojetos-header">
+            <div class="home-subprojetos-header mais-subprojetos">
                 <h2 id="subprojetos-titulo">Nossos Subprojetos</h2>
-                <a class="subprojetos-ver-todos" href="<?php echo esc_url(home_url('/subprojetos/')); ?>">
-                    Ver todos os projetos
+                <a href="<?php echo esc_url(home_url('/subprojetos/')); ?>">
+                    <button type="button">ver todos os projetos</button>
                 </a>
             </div>
 
@@ -161,12 +161,10 @@
                             </div>
                         <?php endwhile; ?>
                     </div>
-                </div>
 
-                <div class="subprojetos-controles">
-                    <button type="button" class="subprojetos-prev" aria-label="Subprojeto anterior">&larr;</button>
-                    <div class="subprojetos-pagination"></div>
-                    <button type="button" class="subprojetos-next" aria-label="Próximo subprojeto">&rarr;</button>
+                    <div class="swiper-button-next swiper-navBtn subprojetos-next"></div>
+                    <div class="swiper-button-prev swiper-navBtn subprojetos-prev"></div>
+                    <div class="swiper-pagination subprojetos-pagination"></div>
                 </div>
             <?php else : ?>
                 <p>Ainda não há subprojetos publicados.</p>

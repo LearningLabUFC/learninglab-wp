@@ -69,6 +69,11 @@ function learninglab_register_styles()
     if (is_singular('software')) {
         wp_enqueue_style('learninglab_software_style', get_template_directory_uri() . "/assets/css/software.css", array('learninglab_curso_style', 'learninglab_membro_style'), $version, 'all');
     }
+
+    // CSS específico da página individual de subprojetos
+    if (is_singular('subprojetos')) {
+        wp_enqueue_style('learninglab_subprojeto_single_style', get_template_directory_uri() . "/assets/css/subprojeto.css", array('learninglab_curso_style', 'learninglab_membro_style'), $version, 'all');
+    }
 }
 
 add_action('wp_enqueue_scripts', 'learninglab_register_styles');

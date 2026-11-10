@@ -189,27 +189,17 @@
         <div class="swiper leitura-swiper">
             <div class="swiper-wrapper">
                 <?php
-
                 $args = array(
-                    'post_type' => 'post',
+                    'post_type'      => 'post',
                     'posts_per_page' => 6,
                 );
                 $query = new WP_Query($args);
-
 
                 if ($query->have_posts()) :
                     while ($query->have_posts()) : $query->the_post();
                 ?>
                         <div class="swiper-slide">
-                            <div class="swiper-slide">
-                                <a href="<?php the_permalink(); ?>" class="card-leitura">
-                                    <img src="<?php the_post_thumbnail_url('medium_large'); ?>" alt="<?php the_title(); ?>">
-                                    <div class="conteudo-leitura">
-                                        <h3><?php the_title(); ?></h3>
-                                        <p><?php the_excerpt(); ?></p>
-                                    </div>
-                                </a>
-                            </div>
+                            <?php get_template_part('template-parts/content', 'card'); ?>
                         </div>
                 <?php
                     endwhile;
@@ -218,13 +208,11 @@
                     echo '<p>Sem posts no momento.</p>';
                 endif;
                 ?>
-
             </div>
 
-
-            <div class="swiper-button-next swiper-navBtn"></div>
-            <div class="swiper-button-prev swiper-navBtn"></div>
-            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next swiper-navBtn leitura-next"></div>
+            <div class="swiper-button-prev swiper-navBtn leitura-prev"></div>
+            <div class="swiper-pagination leitura-pagination"></div>
         </div>
     </section>
 

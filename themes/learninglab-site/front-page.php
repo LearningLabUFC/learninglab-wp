@@ -174,6 +174,57 @@
     <?php wp_reset_postdata(); ?>
     <!-- Fim da seção de subprojetos -->
 
+    <!-- Seção de softwares na Home -->
+    <?php
+    $softwares_query = new WP_Query(array(
+        'post_type'      => 'software',
+        'post_status'    => 'publish',
+        'posts_per_page' => 12,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    ));
+    ?>
+    <section class="home-softwares" aria-labelledby="softwares-titulo">
+        <div class="home-softwares-container">
+            <div class="home-softwares-header mais-softwares">
+                <h2 id="softwares-titulo">Nossos Softwares</h2>
+                <a href="<?php echo esc_url(home_url('/softwares/')); ?>">
+                    <button type="button">ver todos os softwares</button>
+                </a>
+            </div>
+
+            <?php if ($softwares_query->have_posts()) : ?>
+                <div class="swiper softwares-swiper">
+                    <div class="swiper-wrapper">
+                        <?php while ($softwares_query->have_posts()) : $softwares_query->the_post();
+                            $tipos = get_the_terms(get_the_ID(), 'tipo_software');
+                            $badge_text  = ($tipos && !is_wp_error($tipos)) ? $tipos[0]->name : '';
+                            $badge_class = ($tipos && !is_wp_error($tipos)) ? 'tipo-' . $tipos[0]->slug : '';
+                        ?>
+                            <div class="swiper-slide">
+                                <?php
+                                get_template_part('template-parts/content', 'card', array(
+                                    'show_badge'  => !empty($badge_text),
+                                    'badge_text'  => $badge_text,
+                                    'badge_class' => $badge_class,
+                                ));
+                                ?>
+                            </div>
+                        <?php endwhile; ?>
+                    </div>
+
+                    <div class="swiper-button-next swiper-navBtn softwares-next"></div>
+                    <div class="swiper-button-prev swiper-navBtn softwares-prev"></div>
+                    <div class="swiper-pagination softwares-pagination"></div>
+                </div>
+            <?php else : ?>
+                <p>Ainda não há softwares publicados.</p>
+            <?php endif; ?>
+        </div>
+    </section>
+    <?php wp_reset_postdata(); ?>
+    <!-- Fim da seção de softwares -->
+
     <section class="container-leitura">
 
         <div class="mais-noticias">

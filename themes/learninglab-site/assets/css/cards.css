@@ -151,6 +151,13 @@
     background-color: var(--ll-accent);
 }
 
+/* Badges de Tipo de Software (cards) */
+.card-badge.tipo-web-app    { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+.card-badge.tipo-ferramenta { background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.card-badge.tipo-biblioteca { background-color: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+.card-badge.tipo-mobile     { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.card-badge.tipo-api        { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
 /* Indicador de "ler mais" sutil */
 .card-body::after {
     content: '→';

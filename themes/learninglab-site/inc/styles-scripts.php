@@ -92,6 +92,7 @@ function learninglab_register_scripts()
 
     if (is_front_page()) {
         wp_enqueue_script('swiper-init-subprojetos', get_template_directory_uri() . "/assets/js/swiper-init-subprojetos.js", array('swiper-js'), $version, true);
+        wp_enqueue_script('swiper-init-softwares', get_template_directory_uri() . "/assets/js/swiper-init-softwares.js", array('swiper-js'), $version, true);
     }
 
     wp_enqueue_script('learninglab_main_script', get_template_directory_uri() . "/assets/js/main.js", array(), $version, true);

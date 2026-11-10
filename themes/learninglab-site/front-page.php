@@ -57,19 +57,19 @@
 
 
             <?php
-            
+
             $cursos_args = array(
                 'post_type' => 'curso',
-                'posts_per_page' => 2, 
-                'orderby' => 'date', 
-                'order' => 'DESC', 
+                'posts_per_page' => 2,
+                'orderby' => 'date',
+                'order' => 'DESC',
             );
 
             $cursos_query = new WP_Query($cursos_args);
 
             if ($cursos_query->have_posts()) :
                 while ($cursos_query->have_posts()) : $cursos_query->the_post();
-                    
+
                     $terms = get_the_terms(get_the_ID(), 'status_curso');
                     $inscricoes_abertas = false;
 
@@ -85,17 +85,17 @@
 
                     <div class="painel-curso">
                         <a href="<?php the_permalink(); ?>" class="link-curso">
-                            
+
                             <img src="<?php the_post_thumbnail_url('medium'); ?>" alt="<?php the_title(); ?>">
                             <div class="painel-descricao">
-                                
+
                                 <h3><?php the_title(); ?></h3>
                                 <div class="painel-texto"><?php the_excerpt(); ?></div>
 
-                                
+
                                 <div class="status">
                                     <?php
-                                    
+
                                     $terms = get_the_terms(get_the_ID(), 'status_curso');
                                     $curso_passado = false;
 
@@ -108,11 +108,11 @@
                                         }
                                     }
 
-                                    
+
                                     if ($curso_passado) {
                                         echo '';
                                     } else {
-                                        
+
                                         if ($inscricoes_abertas) {
                                             echo '<span class="inscricoes-abertas">inscrições abertas</span>';
                                         } else {
@@ -133,8 +133,111 @@
         </div>
     </section>
 
-    <section class="container-leitura">
+    <!-- TASK 3: seção de subprojetos na Home -->
+    <?php
+    $subprojetos_query = new WP_Query(array(
+        'post_type'      => 'subprojetos',
+        'post_status'    => 'publish',
+        'posts_per_page' => 12,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    ));
 
+    if ($subprojetos_query->have_posts() && $subprojetos_query->post_count >= 3) :
+    ?>
+    <section class="home-subprojetos" aria-labelledby="subprojetos-titulo">
+        <div class="home-subprojetos-container">
+            <div class="home-subprojetos-header mais-subprojetos">
+                <h2 id="subprojetos-titulo">Nossos Subprojetos</h2>
+                <a href="<?php echo esc_url(home_url('/subprojetos/')); ?>">
+                    <button type="button">ver todos os projetos</button>
+                </a>
+            </div>
+
+            <div class="swiper subprojetos-swiper">
+                <div class="swiper-wrapper">
+                    <?php while ($subprojetos_query->have_posts()) : $subprojetos_query->the_post(); ?>
+                        <div class="swiper-slide">
+                            <?php get_template_part('template-parts/content', 'card'); ?>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+
+                <div class="swiper-button-next swiper-navBtn subprojetos-next"></div>
+                <div class="swiper-button-prev swiper-navBtn subprojetos-prev"></div>
+                <div class="swiper-pagination subprojetos-pagination"></div>
+            </div>
+        </div>
+    </section>
+    <?php
+    wp_reset_postdata();
+    endif;
+    ?>
+    <!-- Fim da seção de subprojetos -->
+
+    <!-- Seção de softwares na Home -->
+    <?php
+    $softwares_query = new WP_Query(array(
+        'post_type'      => 'software',
+        'post_status'    => 'publish',
+        'posts_per_page' => 12,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    ));
+
+    if ($softwares_query->have_posts() && $softwares_query->post_count >= 3) :
+    ?>
+    <section class="home-softwares" aria-labelledby="softwares-titulo">
+        <div class="home-softwares-container">
+            <div class="home-softwares-header mais-softwares">
+                <h2 id="softwares-titulo">Nossos Softwares</h2>
+                <a href="<?php echo esc_url(home_url('/softwares/')); ?>">
+                    <button type="button">ver todos os softwares</button>
+                </a>
+            </div>
+
+            <div class="swiper softwares-swiper">
+                <div class="swiper-wrapper">
+                    <?php while ($softwares_query->have_posts()) : $softwares_query->the_post();
+                        $tipos = get_the_terms(get_the_ID(), 'tipo_software');
+                        $badge_text  = ($tipos && !is_wp_error($tipos)) ? $tipos[0]->name : '';
+                        $badge_class = ($tipos && !is_wp_error($tipos)) ? 'tipo-' . $tipos[0]->slug : '';
+                    ?>
+                        <div class="swiper-slide">
+                            <?php
+                            get_template_part('template-parts/content', 'card', array(
+                                'show_badge'  => !empty($badge_text),
+                                'badge_text'  => $badge_text,
+                                'badge_class' => $badge_class,
+                            ));
+                            ?>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+
+                <div class="swiper-button-next swiper-navBtn softwares-next"></div>
+                <div class="swiper-button-prev swiper-navBtn softwares-prev"></div>
+                <div class="swiper-pagination softwares-pagination"></div>
+            </div>
+        </div>
+    </section>
+    <?php
+    wp_reset_postdata();
+    endif;
+    ?>
+    <!-- Fim da seção de softwares -->
+
+    <!-- Seção de posts/notícias na Home -->
+    <?php
+    $posts_query = new WP_Query(array(
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        'posts_per_page' => 6,
+    ));
+
+    if ($posts_query->have_posts() && $posts_query->post_count >= 3) :
+    ?>
+    <section class="container-leitura">
         <div class="mais-noticias">
             <h2>Para leitura</h2>
             <a
@@ -147,91 +250,61 @@
         </div>
         <div class="swiper leitura-swiper">
             <div class="swiper-wrapper">
-                <?php
-                
-                $args = array(
-                    'post_type' => 'post',
-                    'posts_per_page' => 6, 
-                );
-                $query = new WP_Query($args);
-
-
-                if ($query->have_posts()) :
-                    while ($query->have_posts()) : $query->the_post();
-                ?>
-                        <div class="swiper-slide">
-                            <div class="swiper-slide">
-                                <a href="<?php the_permalink(); ?>" class="card-leitura">
-                                    <img src="<?php the_post_thumbnail_url('medium_large'); ?>" alt="<?php the_title(); ?>">
-                                    <div class="conteudo-leitura">
-                                        <h3><?php the_title(); ?></h3>
-                                        <p><?php the_excerpt(); ?></p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                <?php
-                    endwhile;
-                    wp_reset_postdata();
-                else :
-                    echo '<p>Sem posts no momento.</p>';
-                endif;
-                ?>
-
+                <?php while ($posts_query->have_posts()) : $posts_query->the_post(); ?>
+                    <div class="swiper-slide">
+                        <?php get_template_part('template-parts/content', 'card'); ?>
+                    </div>
+                <?php endwhile; ?>
             </div>
 
-            
-            <div class="swiper-button-next swiper-navBtn"></div>
-            <div class="swiper-button-prev swiper-navBtn"></div>
-            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next swiper-navBtn leitura-next"></div>
+            <div class="swiper-button-prev swiper-navBtn leitura-prev"></div>
+            <div class="swiper-pagination leitura-pagination"></div>
         </div>
     </section>
+    <?php
+    wp_reset_postdata();
+    endif;
+    ?>
 
+    <!-- Seção de avaliações na Home -->
+    <?php
+    $avaliacoes_query = new WP_Query(array(
+        'post_type'      => 'avaliacoes',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+    ));
+
+    if ($avaliacoes_query->have_posts() && $avaliacoes_query->post_count >= 3) :
+    ?>
     <section class="container-comentarios">
-
         <h2>O que dizem sobre nós</h2>
         <div class="swiper avaliacao-swiper">
             <div class="swiper-wrapper">
-                <?php
-                
-                $args = array(
-                    'post_type' => 'avaliacoes', 
-                    'posts_per_page' => -1 
-                );
-
-                $query = new WP_Query($args);
-
-                if ($query->have_posts()) :
-                    while ($query->have_posts()) : $query->the_post();
-                ?>
-                        <div class="swiper-slide">
-                            <div class="card-avaliacao">
-                                <div class="imagem-avaliacao">
-                                    <?php the_post_thumbnail('thumbnail'); 
-                                    ?>
-                                </div>
-                                <div class="conteudo-avaliacao">
-                                    <h3><?php the_title(); ?></h3> 
-                                    <p><?php the_content(); ?></p> 
-                                </div>
+                <?php while ($avaliacoes_query->have_posts()) : $avaliacoes_query->the_post(); ?>
+                    <div class="swiper-slide">
+                        <div class="card-avaliacao">
+                            <div class="imagem-avaliacao">
+                                <?php the_post_thumbnail('thumbnail'); ?>
+                            </div>
+                            <div class="conteudo-avaliacao">
+                                <h3><?php the_title(); ?></h3>
+                                <p><?php the_content(); ?></p>
                             </div>
                         </div>
-                <?php
-                    endwhile;
-                    wp_reset_postdata();
-                else :
-                    echo '<p>Sem avaliações no momento.</p>';
-                endif;
-                ?>
+                    </div>
+                <?php endwhile; ?>
             </div>
-            
+
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
-            
             <div class="swiper-pagination"></div>
         </div>
-
     </section>
+    <?php
+    wp_reset_postdata();
+    endif;
+    ?>
 
 
 

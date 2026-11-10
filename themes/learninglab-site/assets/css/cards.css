@@ -30,7 +30,11 @@
 }
 
 /* Link wrapper dentro do card */
-.card-link {
+.card-link,
+.card-link:visited,
+.card-link:hover,
+.card-link:active,
+.card-link:focus {
     display: flex;
     flex-direction: column;
     text-decoration: none;

@@ -24,8 +24,8 @@ function learninglab_register_styles()
     }
 
     // CSS unificado dos cards (blog, cursos, subprojetos e softwares)
-    if (is_front_page() || is_home() || is_page('nossos-cursos') || is_page('subprojetos') || is_page('softwares')) {
-        wp_enqueue_style('learninglab_cards_style', get_template_directory_uri() . "/assets/css/cards.css", array(), $version, 'all');
+    if (is_front_page() || is_home() || is_page('nossos-cursos') || is_page('subprojetos') || is_page('softwares') || is_archive() || is_search()) {
+        wp_enqueue_style('learninglab_cards_style', get_template_directory_uri() . "/assets/css/cards.css", array('learninglab_main_style'), $version, 'all');
     }
 
     if (is_author()) {

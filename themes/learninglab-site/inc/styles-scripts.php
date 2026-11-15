@@ -65,8 +65,8 @@ function learninglab_register_styles()
         wp_enqueue_style('learninglab_artigos_style', get_template_directory_uri() . "/assets/css/artigos.css", array(), $version, 'all');
     }
 
-    // CSS específico da página individual de software
-    if (is_singular('software')) {
+    // CSS específico das páginas de software (listagem e individual)
+    if (is_page('softwares') || is_singular('software')) {
         wp_enqueue_style('learninglab_software_style', get_template_directory_uri() . "/assets/css/software.css", array('learninglab_curso_style', 'learninglab_membro_style'), $version, 'all');
     }
 
@@ -93,6 +93,11 @@ function learninglab_register_scripts()
     if (is_front_page()) {
         wp_enqueue_script('swiper-init-subprojetos', get_template_directory_uri() . "/assets/js/swiper-init-subprojetos.js", array('swiper-js'), $version, true);
         wp_enqueue_script('swiper-init-softwares', get_template_directory_uri() . "/assets/js/swiper-init-softwares.js", array('swiper-js'), $version, true);
+    }
+
+    // Filtros por categoria da listagem de softwares (page-softwares.php)
+    if (is_page('softwares')) {
+        wp_enqueue_script('learninglab_softwares_filter', get_template_directory_uri() . "/assets/js/softwares-filter.js", array(), $version, true);
     }
 
     wp_enqueue_script('learninglab_main_script', get_template_directory_uri() . "/assets/js/main.js", array(), $version, true);

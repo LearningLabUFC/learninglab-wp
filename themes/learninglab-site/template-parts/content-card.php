@@ -7,14 +7,16 @@
  *   - 'show_badge'        => bool   (exibir badge de status, padrão false)
  *   - 'badge_text'        => string (texto do badge)
  *   - 'badge_class'       => string (classe CSS: 'aberto' ou 'em-breve')
+ *   - 'item_tipos'        => string (slugs de tipo do item, separados por espaço, usado pelos filtros)
  */
 
 $show_badge  = isset($args['show_badge']) ? $args['show_badge'] : false;
 $badge_text  = isset($args['badge_text']) ? $args['badge_text'] : '';
 $badge_class = isset($args['badge_class']) ? $args['badge_class'] : '';
+$item_tipos  = isset($args['item_tipos']) ? trim((string) $args['item_tipos']) : '';
 ?>
 
-<article class="card">
+<article class="card"<?php if ($item_tipos !== '') : ?> data-tipos="<?php echo esc_attr($item_tipos); ?>"<?php endif; ?>>
     <a href="<?php the_permalink(); ?>" class="card-link">
         <div class="card-thumb">
             <?php if (has_post_thumbnail()) : ?>

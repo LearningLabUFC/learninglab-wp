@@ -278,3 +278,108 @@
         justify-content: center;
     }
 }
+
+/* ─── Barra de Filtros por Tipo (Listagem) ────────────────── */
+.softwares-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 2rem 0;
+}
+
+.filtro-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--ll-border);
+    border-radius: 999px;
+    background-color: var(--ll-surface);
+    color: var(--ll-text);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: none;
+    transition: background-color 0.2s ease, color 0.2s ease,
+                border-color 0.2s ease, box-shadow 0.2s ease,
+                transform 0.2s ease;
+}
+
+.filtro-pill:hover {
+    border-color: var(--ll-accent);
+    color: var(--ll-accent);
+    transform: translateY(-1px);
+    box-shadow: var(--ll-shadow-1);
+}
+
+.filtro-pill:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--ll-accent-focus-shadow);
+}
+
+.filtro-pill.is-active {
+    background-color: var(--ll-accent);
+    border-color: var(--ll-accent);
+    color: var(--ll-on-accent);
+    box-shadow: var(--ll-shadow-1);
+}
+
+.filtro-pill.is-active:hover {
+    color: var(--ll-on-accent);
+    transform: none;
+}
+
+.filtro-contador {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    background-color: var(--ll-surface-subtle);
+    color: var(--ll-text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.filtro-pill.is-active .filtro-contador {
+    background-color: rgba(255, 255, 255, 0.22);
+    color: var(--ll-on-accent);
+}
+
+/* Card escondido pelo filtro (display:flex em .card exige !important) */
+.page-softwares .card.is-hidden {
+    display: none !important;
+}
+
+/* Estado vazio da listagem */
+.softwares-empty {
+    margin: 0;
+    padding: 1.75rem 1.25rem;
+    border: 1px dashed var(--ll-border-strong);
+    border-radius: 12px;
+    background-color: var(--ll-surface);
+    color: var(--ll-text-muted);
+    font-size: 1rem;
+    text-align: center;
+}
+
+.softwares-empty[hidden] {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .softwares-filtros {
+        gap: 0.45rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .filtro-pill {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.82rem;
+    }
+}

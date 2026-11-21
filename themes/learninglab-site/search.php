@@ -54,17 +54,16 @@ get_header();
             'next_text' => __('Próximo &raquo;', 'textdomain'),
         ));
     else :
-    ?>
-        <div class="content">
-            <p>
-                <?php _e('Nenhum resultado encontrado. Tente fazer outra busca ou considere dar uma olhada em', 'textdomain'); ?>
-                <a href="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>">
-                    <?php _e('nossos posts mais recentes', 'textdomain'); ?>
-                </a>.
-            </p>
-        </div>
-
-    <?php
+        get_template_part(
+            'template-parts/content',
+            'empty',
+            array(
+                'title'    => 'Nenhum resultado encontrado',
+                'message'  => 'Tente fazer outra busca ou confira nossos posts mais recentes.',
+                'cta_text' => 'Ver posts recentes',
+                'cta_url'  => get_permalink( get_option( 'page_for_posts' ) ),
+            )
+        );
     endif;
     ?>
 </div>

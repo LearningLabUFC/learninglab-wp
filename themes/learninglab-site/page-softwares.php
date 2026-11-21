@@ -10,22 +10,24 @@
 
 <div class="container page-softwares">
 
-    <div class="cards-grid">
-        <?php
-        $args = array(
-            'post_type'      => 'software',
-            'posts_per_page' => -1,
-            'post_status'    => 'publish',
-            'orderby'        => 'title',
-            'order'          => 'ASC',
-        );
+    <?php
+    $args = array(
+        'post_type'      => 'software',
+        'posts_per_page' => -1,
+        'post_status'    => 'publish',
+        'orderby'        => 'title',
+        'order'          => 'ASC',
+    );
 
-        $query = new WP_Query( $args );
+    $query = new WP_Query( $args );
 
-        if ( $query->have_posts() ) :
+    if ( $query->have_posts() ) :
+    ?>
+        <div class="cards-grid">
+            <?php
             while ( $query->have_posts() ) : $query->the_post();
 
-                // Obter a taxonomia para exibir o badge
+                // Obter a taxonomia para exibir o badge.
                 $tipos = get_the_terms( get_the_ID(), 'tipo_software' );
                 $badge_text  = ( $tipos && ! is_wp_error( $tipos ) ) ? $tipos[0]->name : '';
                 $badge_class = ( $tipos && ! is_wp_error( $tipos ) ) ? 'tipo-' . $tipos[0]->slug : '';
@@ -37,11 +39,21 @@
                 ) );
 
             endwhile;
-            wp_reset_postdata();
-        else : ?>
-            <p>Nenhum software encontrado no momento.</p>
-        <?php endif; ?>
-    </div>
+            ?>
+        </div>
+        <?php
+        wp_reset_postdata();
+    else :
+        get_template_part(
+            'template-parts/content',
+            'empty',
+            array(
+                'title'   => 'Nenhum software encontrado',
+                'message' => 'Não há softwares disponíveis no momento.',
+            )
+        );
+    endif;
+    ?>
 
 </div>
 

@@ -55,7 +55,14 @@ get_header();
             'next_text' => __('Próximo &raquo;', 'textdomain'),
         ));
     else :
-        echo '<p>Nenhum post encontrado!</p>';
+        get_template_part(
+            'template-parts/content',
+            'empty',
+            array(
+                'title'   => 'Nenhum conteúdo encontrado',
+                'message' => 'Não há publicações disponíveis neste arquivo.',
+            )
+        );
     endif;
     ?>
 </div>

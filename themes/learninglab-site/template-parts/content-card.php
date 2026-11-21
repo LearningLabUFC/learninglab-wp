@@ -12,15 +12,39 @@
 $show_badge  = isset($args['show_badge']) ? $args['show_badge'] : false;
 $badge_text  = isset($args['badge_text']) ? $args['badge_text'] : '';
 $badge_class = isset($args['badge_class']) ? $args['badge_class'] : '';
+
+$has_thumbnail = has_post_thumbnail();
+$thumbnail_alt = '';
+
+if ( $has_thumbnail ) {
+    $thumbnail_alt = trim(
+        (string) get_post_meta(
+            get_post_thumbnail_id(),
+            '_wp_attachment_image_alt',
+            true
+        )
+    );
+
+    if ( '' === $thumbnail_alt ) {
+        $thumbnail_alt = get_the_title();
+    }
+}
 ?>
 
 <article class="card">
     <a href="<?php the_permalink(); ?>" class="card-link">
-        <div class="card-thumb">
-            <?php if (has_post_thumbnail()) : ?>
-                <?php the_post_thumbnail('medium_large'); ?>
-            <?php endif; ?>
-        </div>
+      <div class="card-thumb<?php echo $has_thumbnail ? '' : ' card-thumb--placeholder'; ?>">
+          <?php if ( $has_thumbnail ) : ?>
+              <?php the_post_thumbnail( 'medium_large', array( 'alt' => $thumbnail_alt ) ); ?>
+          <?php else : ?>
+              <img
+                  src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/logo-colorida.png' ); ?>"
+                  alt="Logotipo do LearningLab"
+                  loading="lazy"
+                  decoding="async"
+              >
+          <?php endif; ?>
+      </div>
         <div class="card-body">
             <h3><?php the_title(); ?></h3>
             <p><?php echo wp_trim_words(get_the_excerpt(), 20, '...'); ?></p>
